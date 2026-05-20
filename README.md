@@ -1,6 +1,6 @@
 # gold-price-app
 Delhi to time update gold price
-![image alt](https://ajad2026.github.io/icons/icon- 144.png)
+![image alt]([https://ajad2026.github.io/icons/icon- 144.png](https://github.com/Ajad2026/gold-price-app/blob/8d5c52de59cfbb1f2e202acf19b945e0302043f3/launchericon-144x144.png))
 ![image alt](https://ajad2026.github.io/icons/icon-192.png)
 ![image alt](https://ajad2026.github.io/icons/icon-48.png)
 ![image alt](https://ajad2026.github.io/icons/icon-512.png)
