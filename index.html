@@ -1,1102 +1,1420 @@
-    <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="bn">
 <head>
 <link rel="manifest" href="manifest.json">
-
-<meta name="theme-color" content="#d4af37">
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 <title>সোনা ও রুপোর দাম - ভারত ও বাংলাদেশ</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Bengali:wght@400;500;700;800&display=swap" rel="stylesheet">
 <style>
-*{
-    margin:0;
-    padding:0;
-    box-sizing:border-box;
-    font-family:'Noto Sans Bengali',sans-serif;
-}
-body{
-    background: linear-gradient(135deg,#7a0000,#c79b00);
-    min-height:100vh;
-    padding:14px;
-    padding-bottom:80px;
-    padding-top: 85px;
-    display:flex;
-    justify-content:center;
-    transition: background 0.3s ease;
-}
-.app{
-    width:100%;
-    max-width:420px;
-    position:relative;
-}
-
-/* ==================== ফিক্সড টপ কার্ড ==================== */
-.fixed-top-bar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 1000;
-    background: linear-gradient(135deg, #1a1a2e, #0f0f23);
-    backdrop-filter: blur(12px);
-    padding: 10px 16px;
-    box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-    border-bottom: 2px solid #ffd700;
-}
-.fixed-top-bar .bar-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 8px;
-}
-.menu-btn-fixed {
-    background: rgba(255,215,0,0.2);
-    border: 1px solid rgba(255,215,0,0.5);
-    border-radius: 50px;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.menu-btn-fixed:active {
-    transform: scale(0.95);
-    background: rgba(255,215,0,0.4);
-}
-.menu-btn-fixed .menu-icon-fixed {
-    font-size: 20px;
-    color: #ffd700;
-}
-.menu-btn-fixed .menu-text-fixed {
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-}
-.helpline-btn-fixed {
-    background: rgba(255,215,0,0.2);
-    border: 1px solid rgba(255,215,0,0.5);
-    border-radius: 50px;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-}
-.helpline-btn-fixed:active {
-    transform: scale(0.95);
-    background: rgba(255,215,0,0.4);
-}
-.helpline-btn-fixed .helpline-icon-fixed {
-    font-size: 20px;
-    color: #ffd700;
-}
-.helpline-btn-fixed .helpline-text-fixed {
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-}
-.notif-btn-fixed {
-    background: rgba(255,215,0,0.2);
-    border: 1px solid rgba(255,215,0,0.5);
-    border-radius: 50px;
-    padding: 8px 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    cursor: pointer;
-    transition: 0.2s;
-    position: relative;
-}
-.notif-btn-fixed:active {
-    transform: scale(0.95);
-}
-.notif-btn-fixed .bell-icon-fixed {
-    font-size: 20px;
-    color: #ffd700;
-}
-.notif-btn-fixed .notif-text-fixed {
-    font-size: 14px;
-    font-weight: bold;
-    color: white;
-}
-.notif-btn-fixed .badge-count-fixed {
-    background: #ff4444;
-    color: white;
-    font-size: 11px;
-    font-weight: bold;
-    border-radius: 50%;
-    min-width: 20px;
-    height: 20px;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    padding: 0 5px;
-    position: absolute;
-    top: -5px;
-    right: -5px;
-}
-.notif-panel-fixed {
-    position: fixed;
-    top: 70px;
-    right: 12px;
-    width: 320px;
-    max-width: 90vw;
-    background: #1e1e2f;
-    border-radius: 20px;
-    z-index: 10000;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    border: 1px solid #ffd700;
-    overflow: hidden;
-    display: none;
-    flex-direction: column;
-}
-.notif-panel-fixed.show {
-    display: flex;
-}
-.notif-panel-header {
-    background: linear-gradient(135deg, #d4a017, #8b0000);
-    padding: 12px 16px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    color: white;
-    font-weight: bold;
-}
-.notif-panel-header button {
-    background: none;
-    border: none;
-    color: white;
-    font-size: 20px;
-    cursor: pointer;
-}
-.notif-list-fixed {
-    max-height: 380px;
-    overflow-y: auto;
-    padding: 8px 0;
-}
-.notif-item-fixed {
-    padding: 12px 16px;
-    border-bottom: 1px solid #333;
-    color: #eee;
-    cursor: pointer;
-}
-.notif-item-fixed:hover {
-    background: rgba(255,215,0,0.1);
-}
-.notif-item-fixed .notif-title {
-    font-weight: bold;
-    color: #ffd700;
-    margin-bottom: 6px;
-}
-.notif-item-fixed .notif-message {
-    font-size: 13px;
-    word-break: break-word;
-}
-.notif-item-fixed .notif-time {
-    font-size: 10px;
-    color: #aaa;
-    margin-top: 5px;
-    text-align: right;
-}
-.empty-notif-fixed {
-    padding: 30px;
-    text-align: center;
-    color: #aaa;
-}
-
-/* হেল্পলাইন পপআপ মোডাল */
-.helpline-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.85);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 20000;
-    padding: 20px;
-}
-.helpline-modal-content {
-    background: #1a1a2e;
-    border-radius: 24px;
-    padding: 20px;
-    width: 100%;
-    max-width: 400px;
-    border: 2px solid #ffd700;
-    position: relative;
-}
-.helpline-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ffd700;
-}
-.helpline-modal-header h3 {
-    color: #ffd700;
-    font-size: 18px;
-}
-.close-helpline {
-    background: #f44336;
-    color: white;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-}
-.helpline-form-group {
-    margin-bottom: 15px;
-}
-.helpline-form-group label {
-    display: block;
-    color: #ffd700;
-    font-size: 12px;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-.helpline-form-group input, 
-.helpline-form-group textarea {
-    width: 100%;
-    padding: 12px;
-    background: #0f0f23;
-    border: 1px solid #444;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-}
-.helpline-form-group input:focus, 
-.helpline-form-group textarea:focus {
-    outline: none;
-    border-color: #ffd700;
-}
-.helpline-submit-btn {
-    background: linear-gradient(135deg, #25D366, #075E54);
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 14px;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: pointer;
-}
-.helpline-error {
-    color: #ff4444;
-    font-size: 11px;
-    margin-top: 8px;
-    text-align: center;
-}
-.helpline-success {
-    color: #4caf50;
-    font-size: 11px;
-    margin-top: 8px;
-    text-align: center;
-}
-
-/* লোকেশন সুইচার স্টাইল */
-.location-switch {
-    background: rgba(0,0,0,0.3);
-    border-radius: 50px;
-    padding: 5px;
-    display: flex;
-    gap: 8px;
-    margin-bottom: 15px;
-    backdrop-filter: blur(10px);
-}
-.loc-btn {
-    flex: 1;
-    padding: 10px 8px;
-    border: none;
-    border-radius: 45px;
-    font-size: 14px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: 0.3s;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    background: transparent;
-    color: white;
-}
-.loc-btn.active {
-    background: linear-gradient(135deg, #ffd700, #d4a017);
-    color: #8b0000;
-    box-shadow: 0 2px 10px rgba(0,0,0,0.2);
-}
-.loc-btn:active {
-    transform: scale(0.97);
-}
-
-/* পশ্চিমবঙ্গ থিম (ডিফল্ট) */
-body.wb-theme {
-    background: linear-gradient(135deg,#7a0000,#c79b00);
-}
-.wb-theme .header {
-    background: linear-gradient(135deg,#8b0000,#d4a017);
-}
-.wb-theme .gold24 { background: linear-gradient(135deg,#b8860b,#ffd700); }
-.wb-theme .gold22 { background: linear-gradient(135deg,#8b0000,#d32f2f); }
-
-/* বাংলাদেশ থিম */
-body.bd-theme {
-    background: linear-gradient(135deg,#006a4e,#f42a41);
-}
-.bd-theme .header {
-    background: linear-gradient(135deg,#006a4e,#f42a41);
-}
-.bd-theme .gold24 { background: linear-gradient(135deg,#ffd700,#daa520); }
-.bd-theme .gold22 { background: linear-gradient(135deg,#c0392b,#e74c3c); }
-.bd-theme .big-btn {
-    background: linear-gradient(135deg,#006a4e,#f42a41);
-}
-.bd-theme .submit-btn {
-    background: linear-gradient(135deg,#006a4e,#f42a41);
-}
-.bd-theme .value {
-    color: #006a4e;
-}
-.bd-theme .cat-tab.active {
-    background: #006a4e;
-}
-.bd-theme .order-id {
-    color: #006a4e;
-}
-
-.menu-overlay{
-    position:fixed;
-    top:0;
-    left:0;
-    width:100%;
-    height:100%;
-    background:rgba(0,0,0,0.6);
-    z-index:9998;
-    display:none;
-}
-.menu-overlay.show{
-    display:block;
-}
-.side-menu{
-    position:fixed;
-    top:0;
-    left:-280px;
-    width:280px;
-    height:100%;
-    background:linear-gradient(180deg,#1a1a2e,#0f0f23);
-    z-index:9999;
-    transition:0.3s;
-    overflow-y:auto;
-    box-shadow:2px 0 20px rgba(0,0,0,0.3);
-}
-.side-menu.open{
-    left:0;
-}
-.menu-header{
-    background:linear-gradient(135deg,#d4a017,#8b0000);
-    padding:25px 20px;
-    text-align:center;
-}
-.menu-header h3{
-    color:white;
-    font-size:18px;
-}
-.menu-header p{
-    color:#ffd700;
-    font-size:12px;
-    margin-top:5px;
-}
-.menu-items{
-    padding:15px 0;
-}
-.menu-item{
-    display:flex;
-    align-items:center;
-    gap:15px;
-    padding:14px 20px;
-    color:white;
-    cursor:pointer;
-    transition:0.2s;
-    border-left:3px solid transparent;
-}
-.menu-item:hover{
-    background:rgba(255,215,0,0.15);
-}
-.menu-item.active{
-    background:rgba(255,215,0,0.2);
-    border-left-color:#ffd700;
-}
-.menu-item .menu-icon{
-    font-size:22px;
-    width:32px;
-    text-align:center;
-}
-.menu-item .menu-text{
-    font-size:14px;
-    font-weight:500;
-}
-.menu-footer{
-    margin-top:20px;
-    padding:15px 0;
-    border-top:1px solid rgba(255,255,255,0.1);
-}
-.close-menu{
-    position:absolute;
-    top:15px;
-    right:15px;
-    background:rgba(255,255,255,0.2);
-    width:35px;
-    height:35px;
-    border-radius:50%;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    cursor:pointer;
-    color:white;
-    font-size:18px;
-}
-
-.header{
-    background: linear-gradient(135deg,#8b0000,#d4a017);
-    border-radius:22px;
-    padding:22px 16px;
-    text-align:center;
-    color:white;
-    box-shadow:0 8px 20px rgba(0,0,0,0.2);
-    transition:0.3s;
-    margin-top:0;
-}
-.header h1{
-    font-size:20px;
-    line-height:1.4;
-    font-weight:700;
-}
-.live{
-    margin-top:10px;
-    display:inline-block;
-    background:white;
-    color:green;
-    padding:6px 14px;
-    border-radius:40px;
-    font-size:11px;
-    font-weight:700;
-}
-.date{
-    margin-top:10px;
-    font-size:12px;
-}
-.main-card{
-    margin-top:15px;
-    background:white;
-    border-radius:22px;
-    padding:15px;
-    box-shadow:0 8px 20px rgba(0,0,0,0.12);
-}
-.section-title{
-    display:flex;
-    align-items:center;
-    gap:10px;
-    margin-bottom:15px;
-}
-.icon{
-    width:48px;
-    height:48px;
-    border-radius:14px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    color:white;
-    font-size:22px;
-}
-.gold-icon{
-    background: linear-gradient(135deg,#b8860b,#ffd700);
-}
-.silver-icon{
-    background: linear-gradient(135deg,#777,#d9d9d9);
-}
-.section-title h2{
-    font-size:18px;
-    color:#222;
-    font-weight:700;
-}
-.sub{
-    color:#777;
-    font-size:11px;
-    margin-top:2px;
-}
-.gold-wrapper{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-    margin-bottom:20px;
-}
-.gold-side{
-    background:#fafafa;
-    border:1px solid #ececec;
-    border-radius:18px;
-    padding:12px;
-}
-.gold-heading{
-    text-align:center;
-    padding:10px;
-    border-radius:14px;
-    color:white;
-    font-size:16px;
-    font-weight:700;
-    margin-bottom:12px;
-}
-.gold24{
-    background: linear-gradient(135deg,#b8860b,#ffd700);
-}
-.gold22{
-    background: linear-gradient(135deg,#8b0000,#d32f2f);
-}
-.mini-box{
-    background:white;
-    border:1px solid #ececec;
-    border-radius:14px;
-    padding:12px;
-    text-align:center;
-    margin-bottom:10px;
-    box-shadow:0 3px 8px rgba(0,0,0,0.05);
-}
-.label{
-    color:#666;
-    font-size:11px;
-}
-.value{
-    margin-top:6px;
-    font-size:18px;
-    font-weight:700;
-    color:#8b0000;
-}
-.silver-grid{
-    display:grid;
-    grid-template-columns:1fr 1fr;
-    gap:12px;
-}
-.big-btn{
-    margin:18px auto 0 auto;
-    background: linear-gradient(135deg,#0d47a1,#1976d2);
-    border-radius:18px;
-    padding:14px 16px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    gap:12px;
-    color:white;
-    cursor:pointer;
-    width:90%;
-    max-width:320px;
-}
-.big-btn-icon{
-    width:52px;
-    height:52px;
-    border-radius:14px;
-    background:white;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    font-size:28px;
-}
-.big-btn-title{
-    font-size:17px;
-    font-weight:700;
-}
-.big-btn-sub{
-    margin-top:3px;
-    font-size:11px;
-}
-.required-star{
-    color:#ff4444;
-    margin-left:3px;
-}
-.error-msg{
-    color:#ff4444;
-    font-size:11px;
-    margin-top:5px;
-    text-align:center;
-}
-.order-card{
-    background:#fafafa;
-    border-radius:16px;
-    padding:15px;
-    margin-bottom:12px;
-    border:1px solid #eee;
-}
-.order-header{
-    display:flex;
-    justify-content:space-between;
-    margin-bottom:10px;
-    flex-wrap:wrap;
-}
-.order-id{
-    font-weight:700;
-    color:#8b0000;
-}
-.order-date{
-    font-size:11px;
-    color:#888;
-}
-.order-details{
-    font-size:13px;
-    color:#444;
-    margin-bottom:10px;
-}
-.order-status{
-    display:inline-block;
-    padding:4px 12px;
-    border-radius:20px;
-    font-size:11px;
-    font-weight:600;
-}
-.status-pending{
-    background:#ff9800;
-    color:white;
-}
-.status-delivered{
-    background:#4caf50;
-    color:white;
-}
-.order-actions{
-    display:flex;
-    gap:10px;
-    margin-top:10px;
-}
-.order-actions button{
-    flex:1;
-    padding:8px;
-    border:none;
-    border-radius:10px;
-    font-size:12px;
-    font-weight:600;
-    cursor:pointer;
-}
-.edit-order-btn{
-    background:#2196f3;
-    color:white;
-}
-.delete-order-btn{
-    background:#f44336;
-    color:white;
-}
-.form-group{
-    margin-bottom:15px;
-}
-.form-group label{
-    display:block;
-    font-size:12px;
-    color:#666;
-    margin-bottom:5px;
-}
-.form-group input, .form-group select, .form-group textarea{
-    width:100%;
-    padding:12px;
-    border:1px solid #ddd;
-    border-radius:12px;
-    font-size:14px;
-}
-.submit-btn{
-    background:linear-gradient(135deg,#d4a017,#8b0000);
-    color:white;
-    border:none;
-    padding:12px;
-    border-radius:12px;
-    width:100%;
-    font-size:16px;
-    font-weight:700;
-    cursor:pointer;
-}
-.empty-state{
-    text-align:center;
-    padding:40px 20px;
-    color:#999;
-}
-.sync-status{
-    font-size:10px;
-    margin-top:5px;
-    color:#ffd700;
-}
-.loading{
-    text-align:center;
-    padding:20px;
-    color:#888;
-}
-.local-order-badge{
-    font-size:10px;
-    color:#888;
-    margin-left:8px;
-}
-
-/* গ্যালারি স্টাইল */
-.gallery-catalog{padding:10px 0;}
-.category-tab-bar{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:20px; padding-bottom:10px; border-bottom:2px solid #ffd700;}
-.cat-tab{background:#ffd700; color:#8b0000; border:none; padding:8px 18px; border-radius:25px; cursor:pointer; font-weight:bold; transition:0.2s;}
-.cat-tab.active{background:#8b0000; color:white;}
-.category-items{display:grid; grid-template-columns:1fr 1fr; gap:15px; margin-bottom:25px;}
-.catalog-item{background:white; border-radius:16px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.1); position:relative; transition:0.2s;}
-.catalog-item:hover{transform:translateY(-3px); box-shadow:0 8px 20px rgba(0,0,0,0.15);}
-.catalog-item-img{width:100%; height:180px; object-fit:cover; cursor:pointer;}
-.catalog-item-info{padding:12px; text-align:center;}
-.catalog-item-title{font-weight:700; color:#8b0000; font-size:14px;}
-.catalog-item-desc{font-size:11px; color:#888; margin-top:5px;}
-
-/* ফুল ইমেজ মোডাল */
-.full-image-modal{
-    position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); z-index:20000; display:flex; align-items:center; justify-content:center; cursor:pointer;
-}
-.full-image-content{
-    position:relative; max-width:95%; max-height:95%; background:transparent; cursor:default;
-}
-.full-image-img{
-    max-width:100%; max-height:85vh; object-fit:contain; border-radius:12px; box-shadow:0 4px 20px rgba(0,0,0,0.3);
-}
-.full-image-close{
-    position:absolute; top:-40px; right:0; width:36px; height:36px; border-radius:50%; background:#ff4444; color:white; border:none; font-size:18px; cursor:pointer; display:flex; align-items:center; justify-content:center;
-}
-.full-image-info{
-    position:absolute; bottom:-50px; left:0; right:0; text-align:center; color:white; background:rgba(0,0,0,0.6); padding:10px; border-radius:10px;
-}
-.full-image-title{font-size:16px; font-weight:bold; margin-bottom:5px;}
-.full-image-desc{font-size:12px; color:#ddd;}
-
-/* ক্যালকুলেটর পেজ স্টাইল */
-.calculator-page {
-    min-height: 100vh;
-    padding: 16px 14px;
-    color: white;
-    background: transparent;
-}
-.calculator-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    margin-bottom: 16px;
-    padding-bottom: 12px;
-    border-bottom: 1px solid #ffd700;
-}
-.calculator-header h2 {
-    color: #ffd700;
-    font-size: 18px;
-}
-.header-actions {
-    display: flex;
-    gap: 12px;
-}
-.header-icon {
-    background: rgba(255,215,0,0.15);
-    border: 1.5px solid #ffd700;
-    width: 42px;
-    height: 42px;
-    border-radius: 50%;
-    font-size: 20px;
-    cursor: pointer;
-    color: #ffd700;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: 0.2s;
-}
-.header-icon:active {
-    transform: scale(0.95);
-    background: #ffd700;
-    color: #1a1a2e;
-}
-.calc-card {
-    background: rgba(15, 15, 35, 0.9);
-    backdrop-filter: blur(10px);
-    border-radius: 16px;
-    padding: 12px;
-    margin-bottom: 12px;
-}
-.calc-card label {
-    display: block;
-    color: #ffd700;
-    font-size: 12px;
-    margin-bottom: 5px;
-    font-weight: bold;
-}
-.calc-card input {
-    width: 100%;
-    padding: 10px;
-    background: rgba(26, 26, 46, 0.9);
-    border: 1px solid #444;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-}
-.calc-card input:focus {
-    outline: none;
-    border-color: #ffd700;
-}
-.gst-toggle-small {
-    background: #ffd700;
-    color: #333;
-    border: none;
-    padding: 5px 10px;
-    border-radius: 18px;
-    font-size: 11px;
-    cursor: pointer;
-}
-.gst-input-area {
-    display: none;
-    margin-top: 8px;
-}
-.gst-input-area.show {
-    display: block;
-}
-.result-card {
-    background: rgba(15, 15, 35, 0.9);
-    backdrop-filter: blur(10px);
-    border: 1px solid #ffd700;
-    border-radius: 16px;
-    padding: 12px;
-    margin-top: 8px;
-}
-.result-item {
-    display: flex;
-    justify-content: space-between;
-    padding: 6px 0;
-    border-bottom: 1px solid #333;
-    font-size: 12px;
-}
-.result-item:last-child {
-    border-bottom: none;
-}
-.result-label {
-    color: #ffd700;
-    font-weight: bold;
-}
-.result-value {
-    color: white;
-    font-weight: bold;
-}
-.total-box {
-    background: linear-gradient(45deg, #FFD700, #C68E00);
-    color: black;
-    text-align: center;
-    padding: 10px;
-    border-radius: 12px;
-    margin-top: 10px;
-}
-.total-box span {
-    font-size: 16px;
-    font-weight: bold;
-}
-.small-text {
-    font-size: 11px;
-    text-align: center;
-    margin-top: 8px;
-    color: #aaa;
-}
-.share-modal {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.9);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    z-index: 20000;
-    padding: 20px;
-}
-.share-modal-content {
-    background: #1a1a2e;
-    border-radius: 24px;
-    padding: 20px;
-    width: 100%;
-    max-width: 380px;
-    border: 1px solid #ffd700;
-}
-.share-modal-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 20px;
-    padding-bottom: 10px;
-    border-bottom: 1px solid #ffd700;
-}
-.share-modal-header h3 {
-    color: #ffd700;
-    font-size: 18px;
-}
-.close-modal {
-    background: #f44336;
-    color: white;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    font-size: 18px;
-    cursor: pointer;
-}
-.share-modal input, .share-modal textarea {
-    width: 100%;
-    padding: 10px;
-    background: #0f0f23;
-    border: 1px solid #444;
-    border-radius: 10px;
-    color: white;
-    font-size: 14px;
-    margin-bottom: 12px;
-}
-.share-modal label {
-    display: block;
-    color: #ffd700;
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-.share-modal-btn {
-    background: linear-gradient(135deg, #25D366, #075E54);
-    width: 100%;
-    padding: 12px;
-    border: none;
-    border-radius: 14px;
-    color: white;
-    font-size: 14px;
-    font-weight: bold;
-    margin-top: 10px;
-    cursor: pointer;
-}
-.calculator-popup {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0,0,0,0.8);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 30000;
-}
-.calculator-box {
-    background: #1a1a2e;
-    border-radius: 24px;
-    padding: 20px;
-    width: 90%;
-    max-width: 380px;
-    position: relative;
-    border: 2px solid #ffd700;
-}
-.calculator-box .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 15px;
-    font-size: 24px;
-    cursor: pointer;
-    color: #ffd700;
-}
-.calculator-box .calc-title {
-    font-size: 18px;
-    font-weight: bold;
-    color: #ffd700;
-    text-align: center;
-    margin-bottom: 20px;
-}
-.calculator-box .calc-box {
-    margin-bottom: 15px;
-}
-.calculator-box .calc-box label {
-    display: block;
-    color: #ffd700;
-    font-size: 12px;
-    margin-bottom: 5px;
-}
-.calculator-box .calc-box input,
-.calculator-box .calc-box select,
-.calculator-box .calc-box textarea {
-    width: 100%;
-    padding: 10px;
-    background: #0f0f23;
-    border: 1px solid #444;
-    border-radius: 10px;
-    color: white;
-}
-
-/* নোটিফিকেশন পপ আপ স্টাইল */
-.notification-popup {
-    position: fixed;
-    top: 80px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 90%;
-    max-width: 380px;
-    background: linear-gradient(135deg, #1a1a2e, #0f0f23);
-    border-left: 4px solid #ffd700;
-    border-radius: 16px;
-    padding: 15px;
-    z-index: 30001;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-    animation: slideDown 0.3s ease;
-    color: white;
-}
-@keyframes slideDown {
-    from { opacity: 0; transform: translateX(-50%) translateY(-60px); }
-    to { opacity: 1; transform: translateX(-50%) translateY(0); }
-}
-.notification-popup .notif-header {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    margin-bottom: 10px;
-    padding-bottom: 8px;
-    border-bottom: 1px solid rgba(255,215,0,0.3);
-}
-.notification-popup .notif-header span {
-    font-size: 22px;
-}
-.notification-popup .notif-header strong {
-    flex: 1;
-    color: #ffd700;
-    font-size: 15px;
-}
-.notification-popup .notif-header button {
-    background: none;
-    border: none;
-    color: #aaa;
-    font-size: 18px;
-    cursor: pointer;
-    width: auto;
-    padding: 0;
-    margin: 0;
-}
-.notification-popup .notif-body {
-    font-size: 13px;
-    line-height: 1.5;
-    color: #eee;
-}
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Noto Sans Bengali', sans-serif;
+    }
+    
+    body {
+        background: linear-gradient(135deg, #7a0000, #c79b00);
+        min-height: 100vh;
+        padding: 14px;
+        padding-bottom: 80px;
+        padding-top: 85px;
+        display: flex;
+        justify-content: center;
+        transition: background 0.3s ease;
+    }
+    
+    .app {
+        width: 100%;
+        max-width: 420px;
+        position: relative;
+    }
+    
+    /* ফিক্সড টপ কার্ড */
+    .fixed-top-bar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        z-index: 1000;
+        background: linear-gradient(135deg, #1a1a2e, #0f0f23);
+        backdrop-filter: blur(12px);
+        padding: 10px 16px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+        border-bottom: 2px solid #ffd700;
+    }
+    
+    .fixed-top-bar .bar-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 8px;
+    }
+    
+    .menu-btn-fixed, .helpline-btn-fixed, .notif-btn-fixed {
+        background: rgba(255,215,0,0.2);
+        border: 1px solid rgba(255,215,0,0.5);
+        border-radius: 50px;
+        padding: 8px 16px;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        cursor: pointer;
+        transition: 0.2s;
+    }
+    
+    .menu-btn-fixed:active, .helpline-btn-fixed:active, .notif-btn-fixed:active {
+        transform: scale(0.95);
+        background: rgba(255,215,0,0.4);
+    }
+    
+    .menu-btn-fixed .menu-icon-fixed,
+    .helpline-btn-fixed .helpline-icon-fixed,
+    .notif-btn-fixed .bell-icon-fixed {
+        font-size: 20px;
+        color: #ffd700;
+    }
+    
+    .menu-btn-fixed .menu-text-fixed,
+    .helpline-btn-fixed .helpline-text-fixed,
+    .notif-btn-fixed .notif-text-fixed {
+        font-size: 14px;
+        font-weight: bold;
+        color: white;
+    }
+    
+    .notif-btn-fixed {
+        position: relative;
+    }
+    
+    .notif-btn-fixed .badge-count-fixed {
+        background: #ff4444;
+        color: white;
+        font-size: 11px;
+        font-weight: bold;
+        border-radius: 50%;
+        min-width: 20px;
+        height: 20px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0 5px;
+        position: absolute;
+        top: -5px;
+        right: -5px;
+    }
+    
+    .notif-panel-fixed {
+        position: fixed;
+        top: 70px;
+        right: 12px;
+        width: 320px;
+        max-width: 90vw;
+        background: #1e1e2f;
+        border-radius: 20px;
+        z-index: 10000;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        border: 1px solid #ffd700;
+        overflow: hidden;
+        display: none;
+        flex-direction: column;
+    }
+    
+    .notif-panel-fixed.show {
+        display: flex;
+    }
+    
+    .notif-panel-header {
+        background: linear-gradient(135deg, #d4a017, #8b0000);
+        padding: 12px 16px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        color: white;
+        font-weight: bold;
+    }
+    
+    .notif-panel-header button {
+        background: none;
+        border: none;
+        color: white;
+        font-size: 20px;
+        cursor: pointer;
+    }
+    
+    .notif-list-fixed {
+        max-height: 380px;
+        overflow-y: auto;
+        padding: 8px 0;
+    }
+    
+    .notif-item-fixed {
+        padding: 12px 16px;
+        border-bottom: 1px solid #333;
+        color: #eee;
+        cursor: pointer;
+    }
+    
+    .notif-item-fixed:hover {
+        background: rgba(255,215,0,0.1);
+    }
+    
+    .notif-item-fixed .notif-title {
+        font-weight: bold;
+        color: #ffd700;
+        margin-bottom: 6px;
+    }
+    
+    .notif-item-fixed .notif-message {
+        font-size: 13px;
+        word-break: break-word;
+    }
+    
+    .notif-item-fixed .notif-time {
+        font-size: 10px;
+        color: #aaa;
+        margin-top: 5px;
+        text-align: right;
+    }
+    
+    .empty-notif-fixed {
+        padding: 30px;
+        text-align: center;
+        color: #aaa;
+    }
+    
+    /* হেল্পলাইন মোডাল */
+    .helpline-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.85);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 20000;
+        padding: 20px;
+    }
+    
+    .helpline-modal-content {
+        background: #1a1a2e;
+        border-radius: 24px;
+        padding: 20px;
+        width: 100%;
+        max-width: 400px;
+        border: 2px solid #ffd700;
+        position: relative;
+    }
+    
+    .helpline-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ffd700;
+    }
+    
+    .helpline-modal-header h3 {
+        color: #ffd700;
+        font-size: 18px;
+    }
+    
+    .close-helpline {
+        background: #f44336;
+        color: white;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    
+    .helpline-form-group {
+        margin-bottom: 15px;
+    }
+    
+    .helpline-form-group label {
+        display: block;
+        color: #ffd700;
+        font-size: 12px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    .helpline-form-group input, 
+    .helpline-form-group textarea {
+        width: 100%;
+        padding: 12px;
+        background: #0f0f23;
+        border: 1px solid #444;
+        border-radius: 10px;
+        color: white;
+        font-size: 14px;
+    }
+    
+    .helpline-form-group input:focus, 
+    .helpline-form-group textarea:focus {
+        outline: none;
+        border-color: #ffd700;
+    }
+    
+    .helpline-submit-btn {
+        background: linear-gradient(135deg, #25D366, #075E54);
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 14px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    
+    .helpline-error {
+        color: #ff4444;
+        font-size: 11px;
+        margin-top: 8px;
+        text-align: center;
+    }
+    
+    /* লোকেশন সুইচার */
+    .location-switch {
+        background: rgba(0,0,0,0.3);
+        border-radius: 50px;
+        padding: 5px;
+        display: flex;
+        gap: 8px;
+        margin-bottom: 15px;
+        backdrop-filter: blur(10px);
+    }
+    
+    .loc-btn {
+        flex: 1;
+        padding: 10px 8px;
+        border: none;
+        border-radius: 45px;
+        font-size: 14px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 6px;
+        background: transparent;
+        color: white;
+    }
+    
+    .loc-btn.active {
+        background: linear-gradient(135deg, #ffd700, #d4a017);
+        color: #8b0000;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+    }
+    
+    .loc-btn:active {
+        transform: scale(0.97);
+    }
+    
+    /* থিম */
+    body.wb-theme {
+        background: linear-gradient(135deg, #7a0000, #c79b00);
+    }
+    
+    body.bd-theme {
+        background: linear-gradient(135deg, #006a4e, #f42a41);
+    }
+    
+    .bd-theme .header {
+        background: linear-gradient(135deg, #006a4e, #f42a41);
+    }
+    
+    .bd-theme .big-btn {
+        background: linear-gradient(135deg, #006a4e, #f42a41);
+    }
+    
+    .bd-theme .submit-btn {
+        background: linear-gradient(135deg, #006a4e, #f42a41);
+    }
+    
+    .bd-theme .cat-tab.active {
+        background: #006a4e;
+    }
+    
+    /* সাইড মেনু */
+    .menu-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.6);
+        z-index: 9998;
+        display: none;
+    }
+    
+    .menu-overlay.show {
+        display: block;
+    }
+    
+    .side-menu {
+        position: fixed;
+        top: 0;
+        left: -280px;
+        width: 280px;
+        height: 100%;
+        background: linear-gradient(180deg, #1a1a2e, #0f0f23);
+        z-index: 9999;
+        transition: 0.3s;
+        overflow-y: auto;
+        box-shadow: 2px 0 20px rgba(0,0,0,0.3);
+    }
+    
+    .side-menu.open {
+        left: 0;
+    }
+    
+    .menu-header {
+        background: linear-gradient(135deg, #d4a017, #8b0000);
+        padding: 25px 20px;
+        text-align: center;
+    }
+    
+    .menu-header h3 {
+        color: white;
+        font-size: 18px;
+    }
+    
+    .menu-header p {
+        color: #ffd700;
+        font-size: 12px;
+        margin-top: 5px;
+    }
+    
+    .menu-items {
+        padding: 15px 0;
+    }
+    
+    .menu-item {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        padding: 14px 20px;
+        color: white;
+        cursor: pointer;
+        transition: 0.2s;
+        border-left: 3px solid transparent;
+    }
+    
+    .menu-item:hover {
+        background: rgba(255,215,0,0.15);
+    }
+    
+    .menu-item.active {
+        background: rgba(255,215,0,0.2);
+        border-left-color: #ffd700;
+    }
+    
+    .menu-item .menu-icon {
+        font-size: 22px;
+        width: 32px;
+        text-align: center;
+    }
+    
+    .menu-item .menu-text {
+        font-size: 14px;
+        font-weight: 500;
+    }
+    
+    .close-menu {
+        position: absolute;
+        top: 15px;
+        right: 15px;
+        background: rgba(255,255,255,0.2);
+        width: 35px;
+        height: 35px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        color: white;
+        font-size: 18px;
+    }
+    
+    /* হোম পেজ স্টাইল */
+    .header {
+        background: linear-gradient(135deg, #8b0000, #d4a017);
+        border-radius: 22px;
+        padding: 22px 16px;
+        text-align: center;
+        color: white;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+        transition: 0.3s;
+    }
+    
+    .header h1 {
+        font-size: 20px;
+        line-height: 1.4;
+        font-weight: 700;
+    }
+    
+    .live {
+        margin-top: 10px;
+        display: inline-block;
+        background: white;
+        color: green;
+        padding: 6px 14px;
+        border-radius: 40px;
+        font-size: 11px;
+        font-weight: 700;
+    }
+    
+    .date {
+        margin-top: 10px;
+        font-size: 12px;
+    }
+    
+    .main-card {
+        margin-top: 15px;
+        background: white;
+        border-radius: 22px;
+        padding: 15px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.12);
+    }
+    
+    .section-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 15px;
+    }
+    
+    .icon {
+        width: 48px;
+        height: 48px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 22px;
+    }
+    
+    .gold-icon {
+        background: linear-gradient(135deg, #b8860b, #ffd700);
+    }
+    
+    .silver-icon {
+        background: linear-gradient(135deg, #777, #d9d9d9);
+    }
+    
+    .section-title h2 {
+        font-size: 18px;
+        color: #222;
+        font-weight: 700;
+    }
+    
+    .sub {
+        color: #777;
+        font-size: 11px;
+        margin-top: 2px;
+    }
+    
+    .gold-wrapper {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+        margin-bottom: 20px;
+    }
+    
+    .gold-side {
+        background: #fafafa;
+        border: 1px solid #ececec;
+        border-radius: 18px;
+        padding: 12px;
+    }
+    
+    .gold-heading {
+        text-align: center;
+        padding: 10px;
+        border-radius: 14px;
+        color: white;
+        font-size: 16px;
+        font-weight: 700;
+        margin-bottom: 12px;
+    }
+    
+    .gold24 {
+        background: linear-gradient(135deg, #b8860b, #ffd700);
+    }
+    
+    .gold22 {
+        background: linear-gradient(135deg, #8b0000, #d32f2f);
+    }
+    
+    .mini-box {
+        background: white;
+        border: 1px solid #ececec;
+        border-radius: 14px;
+        padding: 12px;
+        text-align: center;
+        margin-bottom: 10px;
+        box-shadow: 0 3px 8px rgba(0,0,0,0.05);
+    }
+    
+    .label {
+        color: #666;
+        font-size: 11px;
+    }
+    
+    .value {
+        margin-top: 6px;
+        font-size: 18px;
+        font-weight: 700;
+        color: #8b0000;
+    }
+    
+    .silver-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 12px;
+    }
+    
+    .big-btn {
+        margin: 18px auto 0 auto;
+        background: linear-gradient(135deg, #0d47a1, #1976d2);
+        border-radius: 18px;
+        padding: 14px 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 12px;
+        color: white;
+        cursor: pointer;
+        width: 90%;
+        max-width: 320px;
+    }
+    
+    .big-btn-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        background: white;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 28px;
+    }
+    
+    .big-btn-title {
+        font-size: 17px;
+        font-weight: 700;
+    }
+    
+    .big-btn-sub {
+        margin-top: 3px;
+        font-size: 11px;
+    }
+    
+    /* ফর্ম স্টাইল */
+    .form-group {
+        margin-bottom: 15px;
+    }
+    
+    .form-group label {
+        display: block;
+        font-size: 12px;
+        color: #666;
+        margin-bottom: 5px;
+    }
+    
+    .required-star {
+        color: #ff4444;
+        margin-left: 3px;
+    }
+    
+    .form-group input, .form-group select, .form-group textarea {
+        width: 100%;
+        padding: 12px;
+        border: 1px solid #ddd;
+        border-radius: 12px;
+        font-size: 14px;
+    }
+    
+    .submit-btn {
+        background: linear-gradient(135deg, #d4a017, #8b0000);
+        color: white;
+        border: none;
+        padding: 12px;
+        border-radius: 12px;
+        width: 100%;
+        font-size: 16px;
+        font-weight: 700;
+        cursor: pointer;
+    }
+    
+    /* অর্ডার কার্ড */
+    .order-card {
+        background: #fafafa;
+        border-radius: 16px;
+        padding: 15px;
+        margin-bottom: 12px;
+        border: 1px solid #eee;
+    }
+    
+    .order-header {
+        display: flex;
+        justify-content: space-between;
+        margin-bottom: 10px;
+        flex-wrap: wrap;
+    }
+    
+    .order-id {
+        font-weight: 700;
+        color: #8b0000;
+    }
+    
+    .order-date {
+        font-size: 11px;
+        color: #888;
+    }
+    
+    .order-details {
+        font-size: 13px;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    
+    .order-status {
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 11px;
+        font-weight: 600;
+    }
+    
+    .status-pending {
+        background: #ff9800;
+        color: white;
+    }
+    
+    .status-delivered {
+        background: #4caf50;
+        color: white;
+    }
+    
+    .order-actions {
+        display: flex;
+        gap: 10px;
+        margin-top: 10px;
+    }
+    
+    .order-actions button {
+        flex: 1;
+        padding: 8px;
+        border: none;
+        border-radius: 10px;
+        font-size: 12px;
+        font-weight: 600;
+        cursor: pointer;
+    }
+    
+    .edit-order-btn {
+        background: #2196f3;
+        color: white;
+    }
+    
+    .delete-order-btn {
+        background: #f44336;
+        color: white;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 40px 20px;
+        color: #999;
+    }
+    
+    .local-order-badge {
+        font-size: 10px;
+        color: #888;
+        margin-left: 8px;
+    }
+    
+    /* গ্যালারি স্টাইল */
+    .gallery-catalog {
+        padding: 10px 0;
+    }
+    
+    .category-tab-bar {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 8px;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #ffd700;
+    }
+    
+    .cat-tab {
+        background: #ffd700;
+        color: #8b0000;
+        border: none;
+        padding: 8px 18px;
+        border-radius: 25px;
+        cursor: pointer;
+        font-weight: bold;
+        transition: 0.2s;
+    }
+    
+    .cat-tab.active {
+        background: #8b0000;
+        color: white;
+    }
+    
+    .category-items {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 15px;
+        margin-bottom: 25px;
+    }
+    
+    .catalog-item {
+        background: white;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        transition: 0.2s;
+    }
+    
+    .catalog-item:active {
+        transform: translateY(-3px);
+    }
+    
+    .catalog-item-img {
+        width: 100%;
+        height: 180px;
+        object-fit: cover;
+        cursor: pointer;
+    }
+    
+    .catalog-item-info {
+        padding: 12px;
+        text-align: center;
+    }
+    
+    .catalog-item-title {
+        font-weight: 700;
+        color: #8b0000;
+        font-size: 14px;
+    }
+    
+    .catalog-item-desc {
+        font-size: 11px;
+        color: #888;
+        margin-top: 5px;
+    }
+    
+    /* ফুল ইমেজ মোডাল */
+    .full-image-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.95);
+        z-index: 20000;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+    }
+    
+    .full-image-content {
+        position: relative;
+        max-width: 95%;
+        max-height: 95%;
+        background: transparent;
+        cursor: default;
+    }
+    
+    .full-image-img {
+        max-width: 100%;
+        max-height: 85vh;
+        object-fit: contain;
+        border-radius: 12px;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+    }
+    
+    .full-image-close {
+        position: absolute;
+        top: -40px;
+        right: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        background: #ff4444;
+        color: white;
+        border: none;
+        font-size: 18px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    
+    .full-image-info {
+        position: absolute;
+        bottom: -50px;
+        left: 0;
+        right: 0;
+        text-align: center;
+        color: white;
+        background: rgba(0,0,0,0.6);
+        padding: 10px;
+        border-radius: 10px;
+    }
+    
+    .full-image-title {
+        font-size: 16px;
+        font-weight: bold;
+        margin-bottom: 5px;
+    }
+    
+    .full-image-desc {
+        font-size: 12px;
+        color: #ddd;
+    }
+    
+    /* ক্যালকুলেটর পেজ */
+    .calculator-page {
+        min-height: 100vh;
+        padding: 16px 14px;
+        color: white;
+        background: transparent;
+    }
+    
+    .calculator-header {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        margin-bottom: 16px;
+        padding-bottom: 12px;
+        border-bottom: 1px solid #ffd700;
+    }
+    
+    .calculator-header h2 {
+        color: #ffd700;
+        font-size: 18px;
+    }
+    
+    .header-actions {
+        display: flex;
+        gap: 12px;
+    }
+    
+    .header-icon {
+        background: rgba(255,215,0,0.15);
+        border: 1.5px solid #ffd700;
+        width: 42px;
+        height: 42px;
+        border-radius: 50%;
+        font-size: 20px;
+        cursor: pointer;
+        color: #ffd700;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: 0.2s;
+    }
+    
+    .header-icon:active {
+        transform: scale(0.95);
+        background: #ffd700;
+        color: #1a1a2e;
+    }
+    
+    .calc-card {
+        background: rgba(15, 15, 35, 0.9);
+        backdrop-filter: blur(10px);
+        border-radius: 16px;
+        padding: 12px;
+        margin-bottom: 12px;
+    }
+    
+    .calc-card label {
+        display: block;
+        color: #ffd700;
+        font-size: 12px;
+        margin-bottom: 5px;
+        font-weight: bold;
+    }
+    
+    .calc-card input {
+        width: 100%;
+        padding: 10px;
+        background: rgba(26, 26, 46, 0.9);
+        border: 1px solid #444;
+        border-radius: 10px;
+        color: white;
+        font-size: 14px;
+    }
+    
+    .calc-card input:focus {
+        outline: none;
+        border-color: #ffd700;
+    }
+    
+    .gst-toggle-small {
+        background: #ffd700;
+        color: #333;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 18px;
+        font-size: 11px;
+        cursor: pointer;
+    }
+    
+    .gst-input-area {
+        display: none;
+        margin-top: 8px;
+    }
+    
+    .gst-input-area.show {
+        display: block;
+    }
+    
+    .result-card {
+        background: rgba(15, 15, 35, 0.9);
+        backdrop-filter: blur(10px);
+        border: 1px solid #ffd700;
+        border-radius: 16px;
+        padding: 12px;
+        margin-top: 8px;
+    }
+    
+    .result-item {
+        display: flex;
+        justify-content: space-between;
+        padding: 6px 0;
+        border-bottom: 1px solid #333;
+        font-size: 12px;
+    }
+    
+    .result-item:last-child {
+        border-bottom: none;
+    }
+    
+    .result-label {
+        color: #ffd700;
+        font-weight: bold;
+    }
+    
+    .result-value {
+        color: white;
+        font-weight: bold;
+    }
+    
+    .total-box {
+        background: linear-gradient(45deg, #FFD700, #C68E00);
+        color: black;
+        text-align: center;
+        padding: 10px;
+        border-radius: 12px;
+        margin-top: 10px;
+    }
+    
+    .total-box span {
+        font-size: 16px;
+        font-weight: bold;
+    }
+    
+    .small-text {
+        font-size: 11px;
+        text-align: center;
+        margin-top: 8px;
+        color: #aaa;
+    }
+    
+    /* শেয়ার মোডাল */
+    .share-modal {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 20000;
+        padding: 20px;
+    }
+    
+    .share-modal-content {
+        background: #1a1a2e;
+        border-radius: 24px;
+        padding: 20px;
+        width: 100%;
+        max-width: 380px;
+        border: 1px solid #ffd700;
+    }
+    
+    .share-modal-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 20px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #ffd700;
+    }
+    
+    .share-modal-header h3 {
+        color: #ffd700;
+        font-size: 18px;
+    }
+    
+    .close-modal {
+        background: #f44336;
+        color: white;
+        border: none;
+        width: 32px;
+        height: 32px;
+        border-radius: 50%;
+        font-size: 18px;
+        cursor: pointer;
+    }
+    
+    .share-modal input, .share-modal textarea {
+        width: 100%;
+        padding: 10px;
+        background: #0f0f23;
+        border: 1px solid #444;
+        border-radius: 10px;
+        color: white;
+        font-size: 14px;
+        margin-bottom: 12px;
+    }
+    
+    .share-modal label {
+        display: block;
+        color: #ffd700;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    
+    .share-modal-btn {
+        background: linear-gradient(135deg, #25D366, #075E54);
+        width: 100%;
+        padding: 12px;
+        border: none;
+        border-radius: 14px;
+        color: white;
+        font-size: 14px;
+        font-weight: bold;
+        margin-top: 10px;
+        cursor: pointer;
+    }
+    
+    /* পপআপ */
+    .calculator-popup {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.8);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        z-index: 30000;
+    }
+    
+    .calculator-box {
+        background: #1a1a2e;
+        border-radius: 24px;
+        padding: 20px;
+        width: 90%;
+        max-width: 380px;
+        position: relative;
+        border: 2px solid #ffd700;
+    }
+    
+    .calculator-box .close-btn {
+        position: absolute;
+        top: 10px;
+        right: 15px;
+        font-size: 24px;
+        cursor: pointer;
+        color: #ffd700;
+    }
+    
+    .calculator-box .calc-title {
+        font-size: 18px;
+        font-weight: bold;
+        color: #ffd700;
+        text-align: center;
+        margin-bottom: 20px;
+    }
+    
+    .calculator-box .calc-box {
+        margin-bottom: 15px;
+    }
+    
+    .calculator-box .calc-box label {
+        display: block;
+        color: #ffd700;
+        font-size: 12px;
+        margin-bottom: 5px;
+    }
+    
+    .calculator-box .calc-box input,
+    .calculator-box .calc-box select {
+        width: 100%;
+        padding: 10px;
+        background: #0f0f23;
+        border: 1px solid #444;
+        border-radius: 10px;
+        color: white;
+    }
+    
+    /* নোটিফিকেশন পপ আপ */
+    .notification-popup {
+        position: fixed;
+        top: 80px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 90%;
+        max-width: 380px;
+        background: linear-gradient(135deg, #1a1a2e, #0f0f23);
+        border-left: 4px solid #ffd700;
+        border-radius: 16px;
+        padding: 15px;
+        z-index: 30001;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+        animation: slideDown 0.3s ease;
+        color: white;
+    }
+    
+    @keyframes slideDown {
+        from {
+            opacity: 0;
+            transform: translateX(-50%) translateY(-60px);
+        }
+        to {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+    }
+    
+    .notification-popup .notif-header {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        margin-bottom: 10px;
+        padding-bottom: 8px;
+        border-bottom: 1px solid rgba(255,215,0,0.3);
+    }
+    
+    .notification-popup .notif-header span {
+        font-size: 22px;
+    }
+    
+    .notification-popup .notif-header strong {
+        flex: 1;
+        color: #ffd700;
+        font-size: 15px;
+    }
+    
+    .notification-popup .notif-header button {
+        background: none;
+        border: none;
+        color: #aaa;
+        font-size: 18px;
+        cursor: pointer;
+        width: auto;
+        padding: 0;
+        margin: 0;
+    }
+    
+    .notification-popup .notif-body {
+        font-size: 13px;
+        line-height: 1.5;
+        color: #eee;
+    }
+    
+    .image-preview {
+        width: 100%;
+        height: 100px;
+        background: #0f0f23;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        overflow: hidden;
+    }
+    
+    .image-preview img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+    
+    /* ব্যানার অ্যাড স্টাইল */
+    .banner-ad-container {
+        position: fixed;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: rgba(0,0,0,0.9);
+        display: none;
+        justify-content: center;
+        align-items: center;
+        z-index: 9999;
+        padding: 8px;
+        border-top: 2px solid #ffd700;
+    }
+    
+    .banner-ad-container iframe, .banner-ad-container img {
+        max-width: 100%;
+        max-height: 80px;
+    }
+    
+    .close-banner {
+        position: absolute;
+        top: -25px;
+        right: 5px;
+        background: #ff4444;
+        color: white;
+        border: none;
+        border-radius: 50%;
+        width: 24px;
+        height: 24px;
+        font-size: 14px;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
 </style>
 
-<!-- Firebase SDK -->
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
 <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-database-compat.js"></script>
 
 <script>
 // Firebase Config
 const firebaseConfig = {
-  apiKey: "AIzaSyCriHK2G33iyFdmgAfDw0kybdZgeI-5jIw",
-  authDomain: "gold-price-app-aed5a.firebaseapp.com",
-  databaseURL: "https://gold-price-app-aed5a-default-rtdb.asia-southeast1.firebasedatabase.app",
-  projectId: "gold-price-app-aed5a",
-  storageBucket: "gold-price-app-aed5a.firebasestorage.app",
-  appId: "1:186508608253:web:d4114deec94817148d3494"
+    apiKey: "AIzaSyCriHK2G33iyFdmgAfDw0kybdZgeI-5jIw",
+    authDomain: "gold-price-app-aed5a.firebaseapp.com",
+    databaseURL: "https://gold-price-app-aed5a-default-rtdb.asia-southeast1.firebasedatabase.app",
+    projectId: "gold-price-app-aed5a",
+    storageBucket: "gold-price-app-aed5a.firebasestorage.app",
+    appId: "1:186508608253:web:d4114deec94817148d3494"
 };
 
 firebase.initializeApp(firebaseConfig);
 const database = firebase.database();
 
-// লোকেশন ভেরিয়েবল
+// ==================== অ্যাড কনফিগারেশন ভেরিয়েবল ====================
+let adConfig = {
+    banner: { enabled: false, unitId: '' },
+    interstitial: { enabled: false, unitId: '', clickCountThreshold: 3 },
+    rewarded: { enabled: false, unitId: '', reward: '50' }
+};
+let clickCounter = 0;
+let interstitialAdLoaded = false;
+let rewardedAdLoaded = false;
+
+// ==================== অ্যাড কনফিগারেশন লিসেনার (Firebase থেকে রিয়েলটাইমে) ====================
+function loadAdConfig() {
+    database.ref('adConfig').on('value', (snapshot) => {
+        const config = snapshot.val();
+        if(config) {
+            adConfig = {
+                banner: { 
+                    enabled: config.banner?.enabled || false, 
+                    unitId: config.banner?.unitId || '' 
+                },
+                interstitial: { 
+                    enabled: config.interstitial?.enabled || false, 
+                    unitId: config.interstitial?.unitId || '', 
+                    clickCountThreshold: config.interstitial?.clickCountThreshold || 3 
+                },
+                rewarded: { 
+                    enabled: config.rewarded?.enabled || false, 
+                    unitId: config.rewarded?.unitId || '', 
+                    reward: config.rewarded?.reward || '50' 
+                }
+            };
+            
+            // ব্যানার অ্যাড দেখানো/লুকানো
+            const bannerContainer = document.getElementById('bannerAdContainer');
+            if(bannerContainer) {
+                if(adConfig.banner.enabled && adConfig.banner.unitId) {
+                    bannerContainer.style.display = 'flex';
+                    loadBannerAd(adConfig.banner.unitId);
+                } else {
+                    bannerContainer.style.display = 'none';
+                }
+            }
+            
+            console.log('অ্যাড কনফিগারেশন আপডেট করা হয়েছে:', adConfig);
+        }
+    });
+}
+
+// ব্যানার অ্যাড লোড করার ফাংশন
+function loadBannerAd(unitId) {
+    const bannerDiv = document.getElementById('bannerAdContent');
+    if(!bannerDiv) return;
+    
+    // এখানে আপনার অ্যাড নেটওয়ার্ক অনুযায়ী ব্যানার লোড করুন
+    bannerDiv.innerHTML = `
+        <div style="background: #1a1a2e; padding: 10px; text-align: center; border-radius: 8px; width: 100%;">
+            <span style="color: #ffd700; font-size: 12px;">📢 বিজ্ঞাপন</span>
+            <div style="color: white; font-size: 11px; margin-top: 4px;">${unitId.substring(0, 30)}...</div>
+        </div>
+    `;
+}
+
+// ইন্টারস্টিশিয়াল অ্যাড দেখানোর ফাংশন
+function showInterstitialAd() {
+    if(!adConfig.interstitial.enabled) return;
+    if(!adConfig.interstitial.unitId) return;
+    
+    console.log('ইন্টারস্টিশিয়াল অ্যাড দেখানো হচ্ছে:', adConfig.interstitial.unitId);
+    // এখানে আপনার অ্যাড নেটওয়ার্ক অনুযায়ী ইন্টারস্টিশিয়াল লোড ও দেখান
+    alert('📢 ইন্টারস্টিশিয়াল অ্যাড দেখানো হচ্ছে (ডেমো)');
+}
+
+// রিওয়ার্ডেড অ্যাড দেখানোর ফাংশন
+function showRewardedAd() {
+    if(!adConfig.rewarded.enabled) return;
+    if(!adConfig.rewarded.unitId) return;
+    
+    console.log('রিওয়ার্ডেড অ্যাড দেখানো হচ্ছে:', adConfig.rewarded.unitId);
+    alert(`🎁 রিওয়ার্ডেড অ্যাড দেখানো হচ্ছে!\nপুরস্কার: ${adConfig.rewarded.reward} পয়েন্ট`);
+}
+
+// ক্লিক কাউন্ট ট্র্যাক করে ইন্টারস্টিশিয়াল দেখানো
+function trackClickAndShowAd() {
+    if(!adConfig.interstitial.enabled) return;
+    
+    clickCounter++;
+    console.log('ক্লিক কাউন্ট:', clickCounter, '/', adConfig.interstitial.clickCountThreshold);
+    
+    if(clickCounter >= adConfig.interstitial.clickCountThreshold) {
+        showInterstitialAd();
+        clickCounter = 0;
+    }
+}
+
+// ==================== লোকেশন ভেরিয়েবল ====================
 let currentLocation = 'wb';
 let gstEnabled = false;
 
@@ -1110,11 +1428,257 @@ let galleryImages = [];
 let galleryCategories = ["সব", "নেকলেস", "চেন", "আংটি", "দুল", "ব্রেসলেট"];
 const LOCAL_ORDERS_KEY = 'local_orders';
 
-// ==================== নোটিফিকেশন সিস্টেম ====================
+// নোটিফিকেশন ভেরিয়েবল
 let userEmail = localStorage.getItem('userEmail') || '';
 let myNotifications = [];
 let notifListener = null;
 
+// ==================== ইউটিলিটি ফাংশন ====================
+function escapeHtml(str) {
+    if(!str) return '';
+    return str.replace(/[&<>]/g, function(m) {
+        if(m === '&') return '&amp;';
+        if(m === '<') return '&lt;';
+        if(m === '>') return '&gt;';
+        return m;
+    });
+}
+
+function sanitizeInput(str) {
+    if(!str) return '';
+    return str.replace(/[<>]/g, '').substring(0, 500);
+}
+
+function numberToBengaliWords(amount) {
+    if (amount === 0) return "শূন্য টাকা";
+    let num = Math.floor(amount);
+    let crore = Math.floor(num / 10000000);
+    let lakh = Math.floor((num % 10000000) / 100000);
+    let thousand = Math.floor((num % 100000) / 1000);
+    let hundred = Math.floor((num % 1000) / 100);
+    let rest = num % 100;
+    let parts = [];
+    if (crore > 0) parts.push(crore + " কোটি");
+    if (lakh > 0) parts.push(lakh + " লক্ষ");
+    if (thousand > 0) parts.push(thousand + " হাজার");
+    if (hundred > 0) parts.push(hundred + " শত");
+    if (rest > 0) parts.push(rest + " টাকা");
+    if (parts.length === 0) return "০ টাকা";
+    return parts.join(" ");
+}
+
+function convertGramToVoriAnaRoti(gram) {
+    const perVori = 11.6638;
+    let totalVori = gram / perVori;
+    let vori = Math.floor(totalVori);
+    let remainingVori = totalVori - vori;
+    let ana = Math.floor(remainingVori * 16);
+    let roti = ((remainingVori * 16) - ana) * 6;
+    roti = Math.round(roti * 100) / 100;
+    if (roti >= 5.99) {
+        ana += Math.floor(roti / 6);
+        roti = roti % 6;
+        roti = Math.round(roti * 100) / 100;
+    }
+    if (ana >= 16) {
+        vori += Math.floor(ana / 16);
+        ana = ana % 16;
+    }
+    return { vori, ana, roti: roti.toFixed(2) };
+}
+
+// ==================== লোকেশন সুইচ ফাংশন ====================
+function switchLocation(location) {
+    currentLocation = location;
+    
+    const locWb = document.getElementById('locWb');
+    const locBd = document.getElementById('locBd');
+    const locWb2 = document.getElementById('locWb2');
+    const locBd2 = document.getElementById('locBd2');
+    
+    if(locWb) locWb.classList.toggle('active', location === 'wb');
+    if(locBd) locBd.classList.toggle('active', location === 'bd');
+    if(locWb2) locWb2.classList.toggle('active', location === 'wb');
+    if(locBd2) locBd2.classList.toggle('active', location === 'bd');
+    
+    if(location === 'wb') {
+        document.body.classList.remove('bd-theme');
+        document.body.classList.add('wb-theme');
+    } else {
+        document.body.classList.remove('wb-theme');
+        document.body.classList.add('bd-theme');
+    }
+    
+    updateAllPrices();
+    
+    const oldorderPage = document.getElementById('oldorderPage');
+    const deliveryPage = document.getElementById('deliveryPage');
+    
+    if(oldorderPage && oldorderPage.style.display === 'block') loadOldOrders();
+    if(deliveryPage && deliveryPage.style.display === 'block') loadDeliveryOrders();
+}
+
+function updateAllPrices() {
+    const p = prices[currentLocation];
+    const symbol = p.symbol;
+    
+    const gold241 = document.getElementById('gold24_1');
+    const gold2410 = document.getElementById('gold24_10');
+    const gold221 = document.getElementById('gold22_1');
+    const gold2210 = document.getElementById('gold22_10');
+    const silver1 = document.getElementById('silver_1');
+    const silver10 = document.getElementById('silver_10');
+    
+    if(gold241) gold241.innerHTML = symbol + ' ' + p.gold24.toFixed(2);
+    if(gold2410) gold2410.innerHTML = symbol + ' ' + (p.gold24 * 10).toFixed(2);
+    if(gold221) gold221.innerHTML = symbol + ' ' + p.gold22.toFixed(2);
+    if(gold2210) gold2210.innerHTML = symbol + ' ' + (p.gold22 * 10).toFixed(2);
+    if(silver1) silver1.innerHTML = symbol + ' ' + p.silver.toFixed(2);
+    if(silver10) silver10.innerHTML = symbol + ' ' + (p.silver * 10).toFixed(2);
+    
+    const currencySymbols = document.querySelectorAll('#currencySymbol, #currencySymbol2, #currencySymbol3, #calcCurrencySymbol, #calcCurrencySymbol2, #calcCurrencySymbol3, #calcCurrencySymbol4, #calcCurrencySymbol5, #calcCurrencySymbol6');
+    currencySymbols.forEach(el => {
+        if(el) el.innerText = symbol;
+    });
+}
+
+// ==================== Firebase থেকে দাম লোড ====================
+function loadPricesFromFirebase() {
+    database.ref('prices').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if(data) {
+            if(data.wb) {
+                if(data.wb.gold24) prices.wb.gold24 = data.wb.gold24;
+                if(data.wb.gold22) prices.wb.gold22 = data.wb.gold22;
+                if(data.wb.silver) prices.wb.silver = data.wb.silver;
+            }
+            if(data.bd) {
+                if(data.bd.gold24) prices.bd.gold24 = data.bd.gold24;
+                if(data.bd.gold22) prices.bd.gold22 = data.bd.gold22;
+                if(data.bd.silver) prices.bd.silver = data.bd.silver;
+            }
+        }
+        updateAllPrices();
+    });
+}
+
+// ==================== গ্যালারি ফাংশন ====================
+function loadGalleryFromFirebase() {
+    database.ref('gallery').on('value', (snapshot) => {
+        const data = snapshot.val();
+        galleryImages = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+        const galleryPage = document.getElementById('galleryPage');
+        if(galleryPage && galleryPage.style.display !== 'none') renderGallery();
+    });
+}
+
+function loadCategoriesFromFirebase() {
+    database.ref('categories/list').on('value', (snapshot) => {
+        const data = snapshot.val();
+        if(data && Array.isArray(data)) galleryCategories = ['সব', ...data];
+        const galleryPage = document.getElementById('galleryPage');
+        if(galleryPage && galleryPage.style.display !== 'none') renderGallery();
+    });
+}
+
+function renderGallery() {
+    const container = document.getElementById('galleryGrid');
+    if(!container) return;
+    
+    if(galleryImages.length === 0) {
+        container.innerHTML = '<div class="empty-state"><span>🖼️</span><p>কোনো ছবি নেই</p></div>';
+        return;
+    }
+    
+    let categoryMap = new Map();
+    galleryImages.forEach(img => {
+        let cat = img.category || 'অন্যান্য';
+        if(!categoryMap.has(cat)) categoryMap.set(cat, []);
+        categoryMap.get(cat).push(img);
+    });
+    
+    let sortedCategories = Array.from(categoryMap.keys()).sort();
+    
+    let html = `<div class="gallery-catalog"><div class="category-tab-bar"><button class="cat-tab active" data-cat="all">সব</button>`;
+    sortedCategories.forEach(cat => {
+        html += `<button class="cat-tab" data-cat="${cat.replace(/'/g, "\\'")}">${escapeHtml(cat)} (${categoryMap.get(cat).length})</button>`;
+    });
+    html += `</div><div class="category-items" id="galleryItemsContainer">`;
+    
+    galleryImages.forEach(img => {
+        const imageUrl = img.imageUrl || '';
+        html += `<div class="catalog-item" data-category="${escapeHtml(img.category || 'অন্যান্য')}">
+            <img src="${imageUrl}" class="catalog-item-img" alt="${escapeHtml(img.title || '')}" loading="lazy" onclick="showFullImage('${escapeHtml(imageUrl)}', '${escapeHtml(img.title || '')}', '${escapeHtml(img.desc || '')}')" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3E🖼️%3C/text%3E%3C/svg%3E'">
+            <div class="catalog-item-info">
+                <div class="catalog-item-title">${escapeHtml(img.title || 'নতুন ডিজাইন')}</div>
+                ${img.desc ? `<div class="catalog-item-desc">${escapeHtml(img.desc)}</div>` : ''}
+            </div>
+        </div>`;
+    });
+    
+    html += `</div></div>`;
+    container.innerHTML = html;
+    
+    const catTabs = document.querySelectorAll('.cat-tab');
+    catTabs.forEach(btn => {
+        btn.addEventListener('click', function() {
+            const category = this.getAttribute('data-cat');
+            catTabs.forEach(b => {
+                b.classList.remove('active');
+                b.style.background = '#ffd700';
+                b.style.color = '#8b0000';
+            });
+            this.classList.add('active');
+            const activeColor = currentLocation === 'wb' ? '#8b0000' : '#006a4e';
+            this.style.background = activeColor;
+            this.style.color = 'white';
+            
+            const items = document.querySelectorAll('#galleryItemsContainer .catalog-item');
+            if(category === 'all') {
+                items.forEach(item => item.style.display = 'block');
+            } else {
+                items.forEach(item => {
+                    const itemCategory = item.getAttribute('data-category');
+                    item.style.display = itemCategory === category ? 'block' : 'none';
+                });
+            }
+        });
+    });
+}
+
+function showFullImage(imageUrl, title, desc) {
+    if(!imageUrl) {
+        alert('ছবির URL নেই');
+        return;
+    }
+    
+    const modalHtml = `
+        <div id="fullImageModal" class="full-image-modal" onclick="closeFullImage()">
+            <div class="full-image-content" onclick="event.stopPropagation()">
+                <button class="full-image-close" onclick="closeFullImage()">✕</button>
+                <img src="${imageUrl}" class="full-image-img" alt="${escapeHtml(title)}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23333%22/%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23fff%22%3E❌ ছবি লোড হয়নি%3C/text%3E%3C/svg%3E'">
+                <div class="full-image-info">
+                    <div class="full-image-title">${escapeHtml(title)}</div>
+                    ${desc ? `<div class="full-image-desc">${escapeHtml(desc)}</div>` : ''}
+                </div>
+            </div>
+        </div>
+    `;
+    
+    const oldModal = document.getElementById('fullImageModal');
+    if(oldModal) oldModal.remove();
+    
+    document.body.insertAdjacentHTML('beforeend', modalHtml);
+    document.body.style.overflow = 'hidden';
+}
+
+function closeFullImage() {
+    const modal = document.getElementById('fullImageModal');
+    if(modal) modal.remove();
+    document.body.style.overflow = '';
+}
+
+// ==================== নোটিফিকেশন সিস্টেম ====================
 function loadNotificationsForUser() {
     if(!userEmail) {
         myNotifications = [];
@@ -1128,7 +1692,9 @@ function loadNotificationsForUser() {
             const n = child.val();
             if(n.targetUsers && (n.targetUsers.includes(userEmail) || n.targetUsers.includes('all'))) {
                 notifs.push({ id: child.key, ...n, isRead: n.isRead || false });
-            } else if(!n.targetUsers && n.forAll) {
+            } else if(!n.targetUsers && n.isBroadcast) {
+                notifs.push({ id: child.key, ...n, isRead: n.isRead || false });
+            } else if(n.targetUsers === 'all' || n.forAll) {
                 notifs.push({ id: child.key, ...n, isRead: n.isRead || false });
             }
         });
@@ -1207,91 +1773,86 @@ function toggleNotifPanelFixed() {
 
 function closeNotifPanelFixed(e) {
     if(e) e.stopPropagation();
-    document.getElementById('notifPanelFixed').classList.remove('show');
-}
-
-function toggleMenuFixed() {
-    document.getElementById('sideMenu').classList.toggle('open');
-    document.getElementById('menuOverlay').classList.toggle('show');
-}
-
-function closeMenuFixed() {
-    document.getElementById('sideMenu').classList.remove('open');
-    document.getElementById('menuOverlay').classList.remove('show');
-}
-
-function escapeHtml(str) {
-    if(!str) return '';
-    return str.replace(/[&<>]/g, function(m) {
-        if(m === '&') return '&amp;';
-        if(m === '<') return '&lt;';
-        if(m === '>') return '&gt;';
-        return m;
-    });
+    const panel = document.getElementById('notifPanelFixed');
+    if(panel) panel.classList.remove('show');
 }
 
 // ==================== হেল্পলাইন ফাংশন ====================
 function openHelplineModal() {
-    document.getElementById('helplineModal').style.display = 'flex';
-    document.getElementById('helplineName').value = '';
-    document.getElementById('helplinePhone').value = '';
-    document.getElementById('helplineEmail').value = '';
-    document.getElementById('helplineMessage').value = '';
-    document.getElementById('helplineError').innerHTML = '';
-    document.getElementById('helplineError').style.display = 'block';
+    const modal = document.getElementById('helplineModal');
+    if(modal) modal.style.display = 'flex';
+    
+    const nameInput = document.getElementById('helplineName');
+    const phoneInput = document.getElementById('helplinePhone');
+    const emailInput = document.getElementById('helplineEmail');
+    const messageInput = document.getElementById('helplineMessage');
+    const errorDiv = document.getElementById('helplineError');
+    
+    if(nameInput) nameInput.value = '';
+    if(phoneInput) phoneInput.value = '';
+    if(emailInput) emailInput.value = '';
+    if(messageInput) messageInput.value = '';
+    if(errorDiv) errorDiv.innerHTML = '';
 }
 
 function closeHelplineModal() {
-    document.getElementById('helplineModal').style.display = 'none';
+    const modal = document.getElementById('helplineModal');
+    if(modal) modal.style.display = 'none';
 }
 
 function sendHelplineMessage() {
-    const name = document.getElementById('helplineName').value.trim();
-    const phone = document.getElementById('helplinePhone').value.trim();
-    const email = document.getElementById('helplineEmail').value.trim();
-    const message = document.getElementById('helplineMessage').value.trim();
+    const nameInput = document.getElementById('helplineName');
+    const phoneInput = document.getElementById('helplinePhone');
+    const emailInput = document.getElementById('helplineEmail');
+    const messageInput = document.getElementById('helplineMessage');
     const errorDiv = document.getElementById('helplineError');
+    
+    const name = nameInput ? nameInput.value.trim() : '';
+    const phone = phoneInput ? phoneInput.value.trim() : '';
+    const email = emailInput ? emailInput.value.trim() : '';
+    const message = messageInput ? messageInput.value.trim() : '';
     
     const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     
     if(!name) {
-        errorDiv.innerHTML = '❌ দয়া করে আপনার নাম লিখুন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ দয়া করে আপনার নাম লিখুন!';
         return;
     }
     if(!phone) {
-        errorDiv.innerHTML = '❌ দয়া করে আপনার মোবাইল নম্বর লিখুন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ দয়া করে আপনার মোবাইল নম্বর লিখুন!';
         return;
     }
     if(!email) {
-        errorDiv.innerHTML = '❌ দয়া করে আপনার ইমেইল লিখুন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ দয়া করে আপনার ইমেইল লিখুন!';
         return;
     }
     if(!emailPattern.test(email)) {
-        errorDiv.innerHTML = '❌ সঠিক ইমেইল ফরম্যাট দিন! (যেমন: name@gmail.com)';
+        if(errorDiv) errorDiv.innerHTML = '❌ সঠিক ইমেইল ফরম্যাট দিন! (যেমন: name@gmail.com)';
         return;
     }
     if(!message) {
-        errorDiv.innerHTML = '❌ দয়া করে আপনার মেসেজ লিখুন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ দয়া করে আপনার মেসেজ লিখুন!';
         return;
     }
     
     if(!navigator.onLine) {
-        errorDiv.innerHTML = '❌ নেটওয়ার্ক সমস্যা! আপনার ইন্টারনেট সংযোগ চেক করুন।';
+        if(errorDiv) errorDiv.innerHTML = '❌ নেটওয়ার্ক সমস্যা! আপনার ইন্টারনেট সংযোগ চেক করুন।';
         return;
     }
     
-    errorDiv.innerHTML = '⏳ পাঠানো হচ্ছে...';
-    errorDiv.style.color = '#ffd700';
+    if(errorDiv) {
+        errorDiv.innerHTML = '⏳ পাঠানো হচ্ছে...';
+        errorDiv.style.color = '#ffd700';
+    }
     
     localStorage.setItem('userEmail', email);
     userEmail = email;
-    if(notifListener) notifListener();
     loadNotificationsForUser();
     
     const helpData = {
-        name: name,
-        phone: phone,
-        email: email,
+        userName: name,
+        userPhone: phone,
+        userEmail: email,
         message: message,
         location: currentLocation === 'wb' ? 'পশ্চিমবঙ্গ' : 'বাংলাদেশ',
         timestamp: Date.now(),
@@ -1301,19 +1862,22 @@ function sendHelplineMessage() {
     };
     
     const sendBtn = document.querySelector('#helplineModal .helpline-submit-btn');
-    const originalText = sendBtn.innerHTML;
-    sendBtn.innerHTML = '⏳ পাঠানো হচ্ছে...';
-    sendBtn.disabled = true;
+    const originalText = sendBtn ? sendBtn.innerHTML : 'পাঠান';
+    if(sendBtn) {
+        sendBtn.innerHTML = '⏳ পাঠানো হচ্ছে...';
+        sendBtn.disabled = true;
+    }
     
-    database.ref('helplineMessages').push(helpData)
+    database.ref('helpMessages').push(helpData)
         .then(() => {
-            errorDiv.innerHTML = '✅ আপনার মেসেজ সফলভাবে পাঠানো হয়েছে! আমাদের টিম শীঘ্রই যোগাযোগ করবে।';
-            errorDiv.style.color = '#4caf50';
-            
-            document.getElementById('helplineName').value = '';
-            document.getElementById('helplinePhone').value = '';
-            document.getElementById('helplineEmail').value = '';
-            document.getElementById('helplineMessage').value = '';
+            if(errorDiv) {
+                errorDiv.innerHTML = '✅ আপনার মেসেজ সফলভাবে পাঠানো হয়েছে! আমাদের টিম শীঘ্রই যোগাযোগ করবে।';
+                errorDiv.style.color = '#4caf50';
+            }
+            if(nameInput) nameInput.value = '';
+            if(phoneInput) phoneInput.value = '';
+            if(emailInput) emailInput.value = '';
+            if(messageInput) messageInput.value = '';
             
             setTimeout(() => {
                 closeHelplineModal();
@@ -1321,119 +1885,17 @@ function sendHelplineMessage() {
         })
         .catch((error) => {
             console.error('Firebase Error:', error);
-            errorDiv.innerHTML = '❌ মেসেজ পাঠানো ব্যর্থ হয়েছে! দয়া করে পরে আবার চেষ্টা করুন।';
-            errorDiv.style.color = '#ff4444';
+            if(errorDiv) {
+                errorDiv.innerHTML = '❌ মেসেজ পাঠানো ব্যর্থ হয়েছে! দয়া করে পরে আবার চেষ্টা করুন।';
+                errorDiv.style.color = '#ff4444';
+            }
         })
         .finally(() => {
-            sendBtn.innerHTML = originalText;
-            sendBtn.disabled = false;
+            if(sendBtn) {
+                sendBtn.innerHTML = originalText;
+                sendBtn.disabled = false;
+            }
         });
-}
-
-// ==================== Firebase থেকে দাম লোড ====================
-function loadPricesFromFirebase() {
-    database.ref('prices').on('value', (snapshot) => {
-        const data = snapshot.val();
-        if(data) {
-            if(data.wb) {
-                prices.wb.gold24 = data.wb.gold24 || prices.wb.gold24;
-                prices.wb.gold22 = data.wb.gold22 || prices.wb.gold22;
-                prices.wb.silver = data.wb.silver || prices.wb.silver;
-            }
-            if(data.bd) {
-                prices.bd.gold24 = data.bd.gold24 || prices.bd.gold24;
-                prices.bd.gold22 = data.bd.gold22 || prices.bd.gold22;
-                prices.bd.silver = data.bd.silver || prices.bd.silver;
-            }
-        }
-        updateAllPrices();
-    });
-}
-
-// ==================== ইউটিলিটি ফাংশন ====================
-function sanitizeInput(str) {
-    if(!str) return '';
-    return str.replace(/[<>]/g, '').substring(0, 500);
-}
-
-function convertGramToVoriAnaRoti(gram) {
-    const perVori = 11.6638;
-    let totalVori = gram / perVori;
-    let vori = Math.floor(totalVori);
-    let remainingVori = totalVori - vori;
-    let ana = Math.floor(remainingVori * 16);
-    let roti = ((remainingVori * 16) - ana) * 6;
-    roti = Math.round(roti * 100) / 100;
-    if (roti >= 5.99) {
-        ana += Math.floor(roti / 6);
-        roti = roti % 6;
-        roti = Math.round(roti * 100) / 100;
-    }
-    if (ana >= 16) {
-        vori += Math.floor(ana / 16);
-        ana = ana % 16;
-    }
-    return { vori, ana, roti: roti.toFixed(2) };
-}
-
-function numberToBengaliWords(amount) {
-    if (amount === 0) return "শূন্য টাকা";
-    let num = Math.floor(amount);
-    let crore = Math.floor(num / 10000000);
-    let lakh = Math.floor((num % 10000000) / 100000);
-    let thousand = Math.floor((num % 100000) / 1000);
-    let hundred = Math.floor((num % 1000) / 100);
-    let rest = num % 100;
-    let parts = [];
-    if (crore > 0) parts.push(crore + " কোটি");
-    if (lakh > 0) parts.push(lakh + " লক্ষ");
-    if (thousand > 0) parts.push(thousand + " হাজার");
-    if (hundred > 0) parts.push(hundred + " শত");
-    if (rest > 0) parts.push(rest + " টাকা");
-    if (parts.length === 0) return "০ টাকা";
-    return parts.join(" ");
-}
-
-// ==================== লোকেশন সুইচ ফাংশন ====================
-function switchLocation(location) {
-    currentLocation = location;
-    
-    document.getElementById('locWb').classList.remove('active');
-    document.getElementById('locBd').classList.remove('active');
-    document.getElementById('locWb2').classList.remove('active');
-    document.getElementById('locBd2').classList.remove('active');
-    
-    if(location === 'wb') {
-        document.getElementById('locWb').classList.add('active');
-        document.getElementById('locWb2').classList.add('active');
-        document.body.classList.remove('bd-theme');
-        document.body.classList.add('wb-theme');
-    } else {
-        document.getElementById('locBd').classList.add('active');
-        document.getElementById('locBd2').classList.add('active');
-        document.body.classList.remove('wb-theme');
-        document.body.classList.add('bd-theme');
-    }
-    
-    updateAllPrices();
-    if(document.getElementById('oldorderPage').style.display === 'block') loadOldOrders();
-    if(document.getElementById('deliveryPage').style.display === 'block') loadDeliveryOrders();
-}
-
-function updateAllPrices() {
-    const p = prices[currentLocation];
-    const symbol = p.symbol;
-    
-    document.getElementById('gold24_1').innerHTML = symbol + ' ' + p.gold24.toFixed(2);
-    document.getElementById('gold24_10').innerHTML = symbol + ' ' + (p.gold24 * 10).toFixed(2);
-    document.getElementById('gold22_1').innerHTML = symbol + ' ' + p.gold22.toFixed(2);
-    document.getElementById('gold22_10').innerHTML = symbol + ' ' + (p.gold22 * 10).toFixed(2);
-    document.getElementById('silver_1').innerHTML = symbol + ' ' + p.silver.toFixed(2);
-    document.getElementById('silver_10').innerHTML = symbol + ' ' + (p.silver * 10).toFixed(2);
-    
-    document.querySelectorAll('#currencySymbol, #currencySymbol2, #currencySymbol3, #calcCurrencySymbol, #calcCurrencySymbol2, #calcCurrencySymbol3, #calcCurrencySymbol4, #calcCurrencySymbol5, #calcCurrencySymbol6').forEach(el => {
-        if(el) el.innerText = symbol;
-    });
 }
 
 // ==================== লোকাল অর্ডার ফাংশন ====================
@@ -1474,52 +1936,256 @@ function deleteLocalOrder(orderId) {
     return filtered.length !== orders.length;
 }
 
-// ==================== Firebase লিসেনার ====================
-let galleryListener = null, categoriesListener = null;
-
-function setupFirebaseListeners() {
-    if(galleryListener) galleryListener();
-    galleryListener = database.ref('gallery').on('value', (snapshot) => {
-        const data = snapshot.val();
-        galleryImages = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
-        if(document.getElementById('galleryPage').style.display !== 'none') loadGallery();
-    });
+// ==================== অর্ডার ফাংশন ====================
+function loadOldOrders() {
+    const container = document.getElementById('oldOrdersList');
+    if(!container) return;
     
-    if(categoriesListener) categoriesListener();
-    categoriesListener = database.ref('categories/list').on('value', (snapshot) => {
-        const data = snapshot.val();
-        if(data && Array.isArray(data)) galleryCategories = ['সব', ...data];
-        if(document.getElementById('galleryPage').style.display !== 'none') loadGallery();
-    });
+    const orders = getLocalOrders();
+    if(orders.length === 0) {
+        container.innerHTML = '<div class="empty-state"><span>📭</span><p>কোনো অর্ডার নেই</p></div>';
+        return;
+    }
+    
+    const p = prices[currentLocation];
+    container.innerHTML = orders.map(order => `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">${escapeHtml(order.id ? order.id.substring(0, 8) : 'N/A')}</span>
+                <span class="order-date">${escapeHtml(order.date || '')}</span>
+                <span class="local-order-badge">📱 লোকাল</span>
+            </div>
+            <div class="order-details">
+                👤 ${escapeHtml(order.customerName || '')} | 📞 ${escapeHtml(order.phone || '')}<br>
+                💍 ${escapeHtml(order.jewelryType || '')} | ⚖️ ${escapeHtml(order.weight || '-')} গ্রাম<br>
+                ${order.goldDeposit && order.goldDeposit != '0' ? `🏅 জমা সোনা: ${escapeHtml(order.goldDeposit)} গ্রাম<br>` : ''}
+                ${order.cashDeposit && order.cashDeposit != '0' ? `💰 জমা টাকা: ${p.symbol}${escapeHtml(order.cashDeposit)}<br>` : ''}
+                📍 ${escapeHtml(order.address || '-')}<br>
+                ${order.notes ? `📝 ${escapeHtml(order.notes)}` : ''}
+                ${order.customImage ? `<div style="margin-top:8px;"><img src="${order.customImage}" style="width:100%; max-height:100px; object-fit:cover; border-radius:8px;"></div>` : ''}
+            </div>
+            <span class="order-status ${order.status === 'pending' ? 'status-pending' : 'status-delivered'}">${order.status === 'pending' ? '⏳ পেন্ডিং' : '✅ ডেলিভারি সম্পন্ন'}</span>
+            <div class="order-actions">
+                <button class="edit-order-btn" onclick="openEditOrder('${order.id}')">✏️ এডিট</button>
+                <button class="delete-order-btn" onclick="deleteOrder('${order.id}')">🗑️ ডিলিট</button>
+            </div>
+        </div>
+    `).join('');
 }
 
-// ==================== পেজ শো ফাংশন ====================
-function showPage(pageId) {
-    document.getElementById('homePage').style.display = 'none';
-    document.getElementById('neworderPage').style.display = 'none';
-    document.getElementById('oldorderPage').style.display = 'none';
-    document.getElementById('deliveryPage').style.display = 'none';
-    document.getElementById('galleryPage').style.display = 'none';
-    document.getElementById('calculatorPage').style.display = 'none';
+function loadDeliveryOrders() {
+    const orders = getLocalOrders();
+    const pendingOrders = orders.filter(o => o.status === 'pending');
+    const container = document.getElementById('deliveryOrdersList');
+    if(!container) return;
     
-    if(pageId === 'home') document.getElementById('homePage').style.display = 'block';
-    else if(pageId === 'neworder') document.getElementById('neworderPage').style.display = 'block';
-    else if(pageId === 'oldorder') { document.getElementById('oldorderPage').style.display = 'block'; loadOldOrders(); }
-    else if(pageId === 'delivery') { document.getElementById('deliveryPage').style.display = 'block'; loadDeliveryOrders(); }
-    else if(pageId === 'gallery') { document.getElementById('galleryPage').style.display = 'block'; loadGallery(); }
-    else if(pageId === 'calculator') {
-        document.getElementById('calculatorPage').style.display = 'block';
-        calculatePrice();
+    if(pendingOrders.length === 0) {
+        container.innerHTML = '<div class="empty-state"><span>✅</span><p>সব অর্ডার ডেলিভারি সম্পন্ন</p></div>';
+        return;
     }
-    closeMenuFixed();
+    
+    const p = prices[currentLocation];
+    container.innerHTML = pendingOrders.map(order => `
+        <div class="order-card">
+            <div class="order-header">
+                <span class="order-id">${escapeHtml(order.id ? order.id.substring(0, 8) : 'N/A')}</span>
+                <span class="order-date">${escapeHtml(order.date || '')}</span>
+                <span class="local-order-badge">📱 লোকাল</span>
+            </div>
+            <div class="order-details">
+                👤 ${escapeHtml(order.customerName || '')} | 📞 ${escapeHtml(order.phone || '')}<br>
+                💍 ${escapeHtml(order.jewelryType || '')} | ⚖️ ${escapeHtml(order.weight || '-')} গ্রাম<br>
+                ${order.goldDeposit && order.goldDeposit != '0' ? `🏅 জমা সোনা: ${escapeHtml(order.goldDeposit)} গ্রাম<br>` : ''}
+                ${order.cashDeposit && order.cashDeposit != '0' ? `💰 জমা টাকা: ${p.symbol}${escapeHtml(order.cashDeposit)}<br>` : ''}
+                📍 ${escapeHtml(order.address || '-')}
+            </div>
+            <button class="submit-btn" style="margin-top:10px; padding:8px;" onclick="markDelivered('${order.id}')">✅ ডেলিভারি সম্পন্ন করুন</button>
+        </div>
+    `).join('');
+}
+
+function saveNewOrder() {
+    let customImageData = null;
+    const customImageFile = document.getElementById('customDesignImage') ? document.getElementById('customDesignImage').files[0] : null;
+    if(customImageFile){
+        const reader = new FileReader();
+        reader.readAsDataURL(customImageFile);
+        reader.onloadend = function(){ saveOrderWithImage(reader.result); };
+    } else { 
+        saveOrderWithImage(null); 
+    }
+}
+
+function saveOrderWithImage(customImageData) {
+    const customerNameInput = document.getElementById('customerName');
+    const customerPhoneInput = document.getElementById('customerPhone');
+    const jewelryTypeInput = document.getElementById('jewelryType');
+    const orderWeightInput = document.getElementById('orderWeight');
+    const goldDepositInput = document.getElementById('goldDeposit');
+    const cashDepositInput = document.getElementById('cashDeposit');
+    const orderAddressInput = document.getElementById('orderAddress');
+    const orderNotesInput = document.getElementById('orderNotes');
+    
+    const customerName = customerNameInput ? sanitizeInput(customerNameInput.value) : '';
+    const customerPhone = customerPhoneInput ? sanitizeInput(customerPhoneInput.value) : '';
+    const jewelryType = jewelryTypeInput ? sanitizeInput(jewelryTypeInput.value) : '';
+    const weight = orderWeightInput ? sanitizeInput(orderWeightInput.value) : '';
+    const goldDeposit = goldDepositInput ? sanitizeInput(goldDepositInput.value) : '0';
+    const cashDeposit = cashDepositInput ? sanitizeInput(cashDepositInput.value) : '0';
+    const address = orderAddressInput ? sanitizeInput(orderAddressInput.value) : '';
+    const notes = orderNotesInput ? sanitizeInput(orderNotesInput.value) : '';
+    
+    if(!customerName || !customerPhone || !jewelryType || !weight) { 
+        alert('দয়া করে প্রয়োজনীয় তথ্য পূরণ করুন!'); 
+        return; 
+    }
+    if(parseFloat(weight) <= 0) { 
+        alert('ওজন অবশ্যই ০ এর বেশি হতে হবে!'); 
+        return; 
+    }
+    
+    const order = { 
+        customerName: customerName, 
+        phone: customerPhone, 
+        jewelryType: jewelryType, 
+        weight: weight, 
+        goldDeposit: goldDeposit, 
+        cashDeposit: cashDeposit, 
+        address: address, 
+        notes: notes, 
+        customImage: customImageData, 
+        date: new Date().toLocaleString(), 
+        status: 'pending' 
+    };
+    addLocalOrder(order);
+    alert('✅ অর্ডার আপনার ডিভাইসে সংরক্ষণ করা হয়েছে!');
+    clearOrderForm();
+    showPage('oldorderPage');
+    
+    // অর্ডার সেভ করার পর ক্লিক কাউন্ট ট্র্যাক (ইন্টারস্টিশিয়াল অ্যাডের জন্য)
+    trackClickAndShowAd();
+}
+
+function clearOrderForm() {
+    const fields = ['customerName', 'customerPhone', 'jewelryType', 'orderWeight', 'goldDeposit', 'cashDeposit', 'orderAddress', 'orderNotes'];
+    fields.forEach(field => { 
+        const el = document.getElementById(field); 
+        if(el) el.value = ''; 
+    });
+    
+    const customImage = document.getElementById('customDesignImage');
+    if(customImage) customImage.value = '';
+    
+    const preview = document.getElementById('customDesignPreview');
+    if(preview) preview.innerHTML = '<span style="color:#999;">ছবি নির্বাচন করুন</span>';
+    
+    const customGroup = document.getElementById('customDesignGroup');
+    if(customGroup) customGroup.style.display = 'none';
+}
+
+function markDelivered(orderId) {
+    updateLocalOrder(orderId, { status: 'delivered' });
+    alert('✅ অর্ডার ডেলিভারি সম্পন্ন হয়েছে!');
+    loadDeliveryOrders();
+    loadOldOrders();
+}
+
+function openEditOrder(orderId) {
+    const orders = getLocalOrders();
+    const order = orders.find(o => o.id === orderId);
+    if(order){
+        const editOrderId = document.getElementById('editOrderId');
+        const editCustomerName = document.getElementById('editCustomerName');
+        const editCustomerPhone = document.getElementById('editCustomerPhone');
+        const editJewelryType = document.getElementById('editJewelryType');
+        const editWeight = document.getElementById('editWeight');
+        const editGoldDeposit = document.getElementById('editGoldDeposit');
+        const editCashDeposit = document.getElementById('editCashDeposit');
+        const editAddress = document.getElementById('editAddress');
+        const editStatus = document.getElementById('editStatus');
+        const editOrderPopup = document.getElementById('editOrderPopup');
+        const editImagePreview = document.getElementById('editImagePreview');
+        
+        if(editOrderId) editOrderId.value = order.id;
+        if(editCustomerName) editCustomerName.value = order.customerName || '';
+        if(editCustomerPhone) editCustomerPhone.value = order.phone || '';
+        if(editJewelryType) editJewelryType.value = order.jewelryType || '';
+        if(editWeight) editWeight.value = order.weight || '';
+        if(editGoldDeposit) editGoldDeposit.value = order.goldDeposit || '';
+        if(editCashDeposit) editCashDeposit.value = order.cashDeposit || '';
+        if(editAddress) editAddress.value = order.address || '';
+        if(editStatus) editStatus.value = order.status || 'pending';
+        if(editOrderPopup) editOrderPopup.style.display = 'flex';
+        
+        if(editImagePreview && order.customImage) {
+            editImagePreview.innerHTML = `<img src="${order.customImage}" style="width:100%; max-height:80px; object-fit:cover; border-radius:8px; margin-top:8px;">`;
+            editImagePreview.style.display = 'block';
+        } else if(editImagePreview) { 
+            editImagePreview.style.display = 'none'; 
+        }
+    }
+}
+
+function closeEditOrder() { 
+    const popup = document.getElementById('editOrderPopup');
+    if(popup) popup.style.display = 'none'; 
+}
+
+function updateOrder() {
+    const orderIdInput = document.getElementById('editOrderId');
+    const editCustomerName = document.getElementById('editCustomerName');
+    const editCustomerPhone = document.getElementById('editCustomerPhone');
+    const editJewelryType = document.getElementById('editJewelryType');
+    const editWeight = document.getElementById('editWeight');
+    const editGoldDeposit = document.getElementById('editGoldDeposit');
+    const editCashDeposit = document.getElementById('editCashDeposit');
+    const editAddress = document.getElementById('editAddress');
+    const editStatus = document.getElementById('editStatus');
+    
+    const orderId = orderIdInput ? orderIdInput.value : '';
+    const orders = getLocalOrders();
+    const originalOrder = orders.find(o => o.id === orderId);
+    
+    const updatedOrder = {
+        customerName: editCustomerName ? sanitizeInput(editCustomerName.value) : '',
+        phone: editCustomerPhone ? sanitizeInput(editCustomerPhone.value) : '',
+        jewelryType: editJewelryType ? sanitizeInput(editJewelryType.value) : '',
+        weight: editWeight ? sanitizeInput(editWeight.value) : '',
+        goldDeposit: editGoldDeposit ? sanitizeInput(editGoldDeposit.value) : '',
+        cashDeposit: editCashDeposit ? sanitizeInput(editCashDeposit.value) : '',
+        address: editAddress ? sanitizeInput(editAddress.value) : '',
+        status: editStatus ? editStatus.value : 'pending',
+        customImage: originalOrder?.customImage || null,
+        date: originalOrder?.date || new Date().toLocaleString()
+    };
+    updateLocalOrder(orderId, updatedOrder);
+    closeEditOrder();
+    alert('✅ অর্ডার আপডেট করা হয়েছে!');
+    loadOldOrders();
+    loadDeliveryOrders();
+}
+
+function deleteOrder(orderId) {
+    if(confirm('আপনি কি এই অর্ডারটি ডিলিট করতে চান?')){
+        deleteLocalOrder(orderId);
+        alert('🗑️ অর্ডার ডিলিট করা হয়েছে!');
+        loadOldOrders();
+        loadDeliveryOrders();
+    }
 }
 
 // ==================== ক্যালকুলেটর ফাংশন ====================
 function calculatePrice() {
-    const price = parseFloat(document.getElementById('calcPrice')?.value) || 0;
-    let weight = parseFloat(document.getElementById('calcWeight')?.value) || 0;
-    const labour = parseFloat(document.getElementById('calcLabour')?.value) || 0;
-    const gstPercent = gstEnabled ? (parseFloat(document.getElementById('calcGst')?.value) || 0) : 0;
+    const calcPriceInput = document.getElementById('calcPrice');
+    const calcWeightInput = document.getElementById('calcWeight');
+    const calcLabourInput = document.getElementById('calcLabour');
+    const calcGstInput = document.getElementById('calcGst');
+    
+    const price = calcPriceInput ? (parseFloat(calcPriceInput.value) || 0) : 0;
+    let weight = calcWeightInput ? (parseFloat(calcWeightInput.value) || 0) : 0;
+    const labour = calcLabourInput ? (parseFloat(calcLabourInput.value) || 0) : 0;
+    const gstPercent = gstEnabled && calcGstInput ? (parseFloat(calcGstInput.value) || 0) : 0;
+    
     if(weight < 0) weight = 0;
     
     const { vori, ana, roti } = convertGramToVoriAnaRoti(weight);
@@ -1528,20 +2194,29 @@ function calculatePrice() {
     const gstAmount = subtotal * (gstPercent / 100);
     const total = subtotal + gstAmount;
     
-    document.getElementById('totalGram').innerText = weight.toFixed(3);
-    document.getElementById('totalVori').innerHTML = `${vori} ভরি ${ana} আনা ${roti} রতি`;
-    document.getElementById('productPrice').innerText = productValue.toFixed(2);
-    document.getElementById('labourAmount').innerText = labour.toFixed(2);
-    document.getElementById('totalAmount').innerHTML = total.toFixed(2);
-    document.getElementById('totalAmountWords').innerText = numberToBengaliWords(total);
-    
+    const totalGramEl = document.getElementById('totalGram');
+    const totalVoriEl = document.getElementById('totalVori');
+    const productPriceEl = document.getElementById('productPrice');
+    const labourAmountEl = document.getElementById('labourAmount');
+    const totalAmountEl = document.getElementById('totalAmount');
+    const totalAmountWordsEl = document.getElementById('totalAmountWords');
     const gstRow = document.getElementById('gstRow');
+    const gstPercentSpan = document.getElementById('gstPercent');
+    const gstAmountSpan = document.getElementById('gstAmount');
+    
+    if(totalGramEl) totalGramEl.innerText = weight.toFixed(3);
+    if(totalVoriEl) totalVoriEl.innerHTML = `${vori} ভরি ${ana} আনা ${roti} রতি`;
+    if(productPriceEl) productPriceEl.innerText = productValue.toFixed(2);
+    if(labourAmountEl) labourAmountEl.innerText = labour.toFixed(2);
+    if(totalAmountEl) totalAmountEl.innerHTML = total.toFixed(2);
+    if(totalAmountWordsEl) totalAmountWordsEl.innerText = numberToBengaliWords(total);
+    
     if(gstEnabled && gstPercent > 0) {
-        document.getElementById('gstPercent').innerText = gstPercent;
-        document.getElementById('gstAmount').innerText = gstAmount.toFixed(2);
-        gstRow.style.display = 'flex';
+        if(gstPercentSpan) gstPercentSpan.innerText = gstPercent;
+        if(gstAmountSpan) gstAmountSpan.innerText = gstAmount.toFixed(2);
+        if(gstRow) gstRow.style.display = 'flex';
     } else { 
-        gstRow.style.display = 'none'; 
+        if(gstRow) gstRow.style.display = 'none'; 
     }
 }
 
@@ -1555,61 +2230,93 @@ function toggleGST() {
 }
 
 function refreshCalculator() {
-    document.getElementById('calcPrice').value = '';
-    document.getElementById('calcWeight').value = '';
-    document.getElementById('calcLabour').value = '';
-    document.getElementById('calcGst').value = '';
+    const calcPrice = document.getElementById('calcPrice');
+    const calcWeight = document.getElementById('calcWeight');
+    const calcLabour = document.getElementById('calcLabour');
+    const calcGst = document.getElementById('calcGst');
+    
+    if(calcPrice) calcPrice.value = '';
+    if(calcWeight) calcWeight.value = '';
+    if(calcLabour) calcLabour.value = '';
+    if(calcGst) calcGst.value = '';
+    
     gstEnabled = false;
     const gstDiv = document.getElementById('gstInputDiv');
     const gstBtn = document.getElementById('gstToggleBtn');
+    
     if(gstDiv) gstDiv.classList.remove('show');
     if(gstBtn) gstBtn.innerHTML = '➕ GST যোগ করুন';
+    
     calculatePrice();
 }
 
 function openShareModal() {
-    document.getElementById('shareModal').style.display = 'flex';
-    document.getElementById('shareModalError').innerHTML = '';
-    document.getElementById('modalShopName').value = localStorage.getItem('shopName_' + currentLocation) || '';
-    document.getElementById('modalShopAddress').value = localStorage.getItem('shopAddress_' + currentLocation) || '';
-    document.getElementById('modalJewelryName').value = '';
-    document.getElementById('modalJewelryDesc').value = '';
+    const shareModal = document.getElementById('shareModal');
+    if(shareModal) shareModal.style.display = 'flex';
+    
+    const errorDiv = document.getElementById('shareModalError');
+    if(errorDiv) errorDiv.innerHTML = '';
+    
+    const shopName = localStorage.getItem('shopName_' + currentLocation);
+    const shopAddress = localStorage.getItem('shopAddress_' + currentLocation);
+    
+    const modalShopName = document.getElementById('modalShopName');
+    const modalShopAddress = document.getElementById('modalShopAddress');
+    const modalJewelryName = document.getElementById('modalJewelryName');
+    const modalJewelryDesc = document.getElementById('modalJewelryDesc');
+    
+    if(modalShopName) modalShopName.value = shopName || '';
+    if(modalShopAddress) modalShopAddress.value = shopAddress || '';
+    if(modalJewelryName) modalJewelryName.value = '';
+    if(modalJewelryDesc) modalJewelryDesc.value = '';
 }
 
 function closeShareModal() {
-    document.getElementById('shareModal').style.display = 'none';
+    const shareModal = document.getElementById('shareModal');
+    if(shareModal) shareModal.style.display = 'none';
 }
 
 function sendBillFromModal() {
-    const shopName = document.getElementById('modalShopName').value.trim();
-    const shopAddress = document.getElementById('modalShopAddress').value.trim();
-    const jewelryName = document.getElementById('modalJewelryName').value.trim();
-    const jewelryDesc = document.getElementById('modalJewelryDesc').value.trim();
+    const modalShopName = document.getElementById('modalShopName');
+    const modalShopAddress = document.getElementById('modalShopAddress');
+    const modalJewelryName = document.getElementById('modalJewelryName');
+    const modalJewelryDesc = document.getElementById('modalJewelryDesc');
+    const errorDiv = document.getElementById('shareModalError');
+    
+    const shopName = modalShopName ? modalShopName.value.trim() : '';
+    const shopAddress = modalShopAddress ? modalShopAddress.value.trim() : '';
+    const jewelryName = modalJewelryName ? modalJewelryName.value.trim() : '';
+    const jewelryDesc = modalJewelryDesc ? modalJewelryDesc.value.trim() : '';
     const p = prices[currentLocation];
     
     if(!shopName) {
-        document.getElementById('shareModalError').innerHTML = '❌ দোকানের নাম দিন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ দোকানের নাম দিন!';
         return;
     }
     if(!shopAddress) {
-        document.getElementById('shareModalError').innerHTML = '❌ দোকানের ঠিকানা দিন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ দোকানের ঠিকানা দিন!';
         return;
     }
     if(!jewelryName) {
-        document.getElementById('shareModalError').innerHTML = '❌ গহনার নাম দিন!';
+        if(errorDiv) errorDiv.innerHTML = '❌ গহনার নাম দিন!';
         return;
     }
     
-    document.getElementById('shareModalError').innerHTML = '';
+    if(errorDiv) errorDiv.innerHTML = '';
     closeShareModal();
     
     localStorage.setItem('shopName_' + currentLocation, shopName);
     localStorage.setItem('shopAddress_' + currentLocation, shopAddress);
     
-    const price = parseFloat(document.getElementById('calcPrice')?.value) || 0;
-    const weight = parseFloat(document.getElementById('calcWeight')?.value) || 0;
-    const labour = parseFloat(document.getElementById('calcLabour')?.value) || 0;
-    const gstPercent = gstEnabled ? (parseFloat(document.getElementById('calcGst')?.value) || 0) : 0;
+    const calcPrice = document.getElementById('calcPrice');
+    const calcWeight = document.getElementById('calcWeight');
+    const calcLabour = document.getElementById('calcLabour');
+    const calcGst = document.getElementById('calcGst');
+    
+    const price = calcPrice ? (parseFloat(calcPrice.value) || 0) : 0;
+    const weight = calcWeight ? (parseFloat(calcWeight.value) || 0) : 0;
+    const labour = calcLabour ? (parseFloat(calcLabour.value) || 0) : 0;
+    const gstPercent = gstEnabled && calcGst ? (parseFloat(calcGst.value) || 0) : 0;
     
     const productValue = weight * price;
     const subtotal = productValue + labour;
@@ -1656,280 +2363,72 @@ ${jewelryDesc ? '• বিবরণ     : ' + jewelryDesc + '\n' : ''}• ও�
     window.open(`https://wa.me/?text=${encodeURIComponent(billText)}`, '_blank');
 }
 
-// ==================== অর্ডার ফাংশন ====================
-function loadOldOrders() {
-    const container = document.getElementById('oldOrdersList');
-    if(!container) return;
-    const orders = getLocalOrders();
-    if(orders.length === 0) {
-        container.innerHTML = '<div class="empty-state"><span>📭</span><p>কোনো অর্ডার নেই</p></div>';
-        return;
-    }
-    const p = prices[currentLocation];
-    container.innerHTML = orders.map(order => `
-        <div class="order-card">
-            <div class="order-header">
-                <span class="order-id">${escapeHtml(order.id ? order.id.substring(0, 8) : 'N/A')}</span>
-                <span class="order-date">${escapeHtml(order.date || '')}</span>
-                <span class="local-order-badge">📱 লোকাল</span>
-            </div>
-            <div class="order-details">
-                👤 ${escapeHtml(order.customerName || '')} | 📞 ${escapeHtml(order.phone || '')}<br>
-                💍 ${escapeHtml(order.jewelryType || '')} | ⚖️ ${escapeHtml(order.weight || '-')} গ্রাম<br>
-                ${order.goldDeposit && order.goldDeposit != '0' ? `🏅 জমা সোনা: ${escapeHtml(order.goldDeposit)} গ্রাম<br>` : ''}
-                ${order.cashDeposit && order.cashDeposit != '0' ? `💰 জমা টাকা: ${p.symbol}${escapeHtml(order.cashDeposit)}<br>` : ''}
-                📍 ${escapeHtml(order.address || '-')}<br>
-                ${order.notes ? `📝 ${escapeHtml(order.notes)}` : ''}
-                ${order.customImage ? `<div style="margin-top:8px;"><img src="${order.customImage}" style="width:100%; max-height:100px; object-fit:cover; border-radius:8px;"></div>` : ''}
-            </div>
-            <span class="order-status ${order.status === 'pending' ? 'status-pending' : 'status-delivered'}">${order.status === 'pending' ? '⏳ পেন্ডিং' : '✅ ডেলিভারি সম্পন্ন'}</span>
-            <div class="order-actions">
-                <button class="edit-order-btn" onclick="openEditOrder('${order.id}')">✏️ এডিট</button>
-                <button class="delete-order-btn" onclick="deleteOrder('${order.id}')">🗑️ ডিলিট</button>
-            </div>
-        </div>
-    `).join('');
-}
-
-function loadDeliveryOrders() {
-    const orders = getLocalOrders();
-    const pendingOrders = orders.filter(o => o.status === 'pending');
-    const container = document.getElementById('deliveryOrdersList');
-    if(!container) return;
-    if(pendingOrders.length === 0) {
-        container.innerHTML = '<div class="empty-state"><span>✅</span><p>সব অর্ডার ডেলিভারি সম্পন্ন</p></div>';
-        return;
-    }
-    const p = prices[currentLocation];
-    container.innerHTML = pendingOrders.map(order => `
-        <div class="order-card">
-            <div class="order-header">
-                <span class="order-id">${escapeHtml(order.id ? order.id.substring(0, 8) : 'N/A')}</span>
-                <span class="order-date">${escapeHtml(order.date || '')}</span>
-                <span class="local-order-badge">📱 লোকাল</span>
-            </div>
-            <div class="order-details">
-                👤 ${escapeHtml(order.customerName || '')} | 📞 ${escapeHtml(order.phone || '')}<br>
-                💍 ${escapeHtml(order.jewelryType || '')} | ⚖️ ${escapeHtml(order.weight || '-')} গ্রাম<br>
-                ${order.goldDeposit && order.goldDeposit != '0' ? `🏅 জমা সোনা: ${escapeHtml(order.goldDeposit)} গ্রাম<br>` : ''}
-                ${order.cashDeposit && order.cashDeposit != '0' ? `💰 জমা টাকা: ${p.symbol}${escapeHtml(order.cashDeposit)}<br>` : ''}
-                📍 ${escapeHtml(order.address || '-')}
-            </div>
-            <button class="submit-btn" style="margin-top:10px; padding:8px;" onclick="markDelivered('${order.id}')">✅ ডেলিভারি সম্পন্ন করুন</button>
-        </div>
-    `).join('');
-}
-
-function saveNewOrder() {
-    let customImageData = null;
-    const customImageFile = document.getElementById('customDesignImage')?.files[0];
-    if(customImageFile){
-        const reader = new FileReader();
-        reader.readAsDataURL(customImageFile);
-        reader.onloadend = function(){ saveOrderWithImage(reader.result); };
-    } else { saveOrderWithImage(null); }
-}
-
-function saveOrderWithImage(customImageData) {
-    const customerName = sanitizeInput(document.getElementById('customerName')?.value || '');
-    const customerPhone = sanitizeInput(document.getElementById('customerPhone')?.value || '');
-    const jewelryType = sanitizeInput(document.getElementById('jewelryType')?.value || '');
-    const weight = sanitizeInput(document.getElementById('orderWeight')?.value || '');
-    const goldDeposit = sanitizeInput(document.getElementById('goldDeposit')?.value || '0');
-    const cashDeposit = sanitizeInput(document.getElementById('cashDeposit')?.value || '0');
-    const address = sanitizeInput(document.getElementById('orderAddress')?.value || '');
-    const notes = sanitizeInput(document.getElementById('orderNotes')?.value || '');
-    
-    if(!customerName || !customerPhone || !jewelryType || !weight) { alert('দয়া করে প্রয়োজনীয় তথ্য পূরণ করুন!'); return; }
-    if(parseFloat(weight) <= 0) { alert('ওজন অবশ্যই ০ এর বেশি হতে হবে!'); return; }
-    
-    const order = { customerName, phone: customerPhone, jewelryType, weight, goldDeposit, cashDeposit, address, notes, customImage: customImageData, date: new Date().toLocaleString(), status: 'pending' };
-    addLocalOrder(order);
-    alert('✅ অর্ডার আপনার ডিভাইসে সংরক্ষণ করা হয়েছে!');
-    clearOrderForm();
-    showPage('oldorder');
-}
-
-function clearOrderForm() {
-    const fields = ['customerName', 'customerPhone', 'jewelryType', 'orderWeight', 'goldDeposit', 'cashDeposit', 'orderAddress', 'orderNotes'];
-    fields.forEach(field => { const el = document.getElementById(field); if(el) el.value = ''; });
-    const customImage = document.getElementById('customDesignImage');
-    if(customImage) customImage.value = '';
-    const preview = document.getElementById('customDesignPreview');
-    if(preview) preview.innerHTML = '<span style="color:#999;">ছবি নির্বাচন করুন</span>';
-    const customGroup = document.getElementById('customDesignGroup');
-    if(customGroup) customGroup.style.display = 'none';
-}
-
-function markDelivered(orderId) {
-    updateLocalOrder(orderId, { status: 'delivered' });
-    alert('✅ অর্ডার ডেলিভারি সম্পন্ন হয়েছে!');
-    loadDeliveryOrders();
-    loadOldOrders();
-}
-
-function openEditOrder(orderId) {
-    const orders = getLocalOrders();
-    const order = orders.find(o => o.id === orderId);
-    if(order){
-        document.getElementById('editOrderId').value = order.id;
-        document.getElementById('editCustomerName').value = order.customerName || '';
-        document.getElementById('editCustomerPhone').value = order.phone || '';
-        document.getElementById('editJewelryType').value = order.jewelryType || '';
-        document.getElementById('editWeight').value = order.weight || '';
-        document.getElementById('editGoldDeposit').value = order.goldDeposit || '';
-        document.getElementById('editCashDeposit').value = order.cashDeposit || '';
-        document.getElementById('editAddress').value = order.address || '';
-        document.getElementById('editStatus').value = order.status || 'pending';
-        document.getElementById('editOrderPopup').style.display = 'flex';
-        const previewDiv = document.getElementById('editImagePreview');
-        if(previewDiv && order.customImage) {
-            previewDiv.innerHTML = `<img src="${order.customImage}" style="width:100%; max-height:80px; object-fit:cover; border-radius:8px; margin-top:8px;">`;
-            previewDiv.style.display = 'block';
-        } else if(previewDiv) { previewDiv.style.display = 'none'; }
-    }
-}
-
-function closeEditOrder() { document.getElementById('editOrderPopup').style.display = 'none'; }
-
-function updateOrder() {
-    const orderId = document.getElementById('editOrderId').value;
-    const orders = getLocalOrders();
-    const originalOrder = orders.find(o => o.id === orderId);
-    const updatedOrder = {
-        customerName: sanitizeInput(document.getElementById('editCustomerName').value),
-        phone: sanitizeInput(document.getElementById('editCustomerPhone').value),
-        jewelryType: sanitizeInput(document.getElementById('editJewelryType').value),
-        weight: sanitizeInput(document.getElementById('editWeight').value),
-        goldDeposit: sanitizeInput(document.getElementById('editGoldDeposit').value),
-        cashDeposit: sanitizeInput(document.getElementById('editCashDeposit').value),
-        address: sanitizeInput(document.getElementById('editAddress').value),
-        status: document.getElementById('editStatus').value,
-        customImage: originalOrder?.customImage || null,
-        date: originalOrder?.date || new Date().toLocaleString()
-    };
-    updateLocalOrder(orderId, updatedOrder);
-    closeEditOrder();
-    alert('✅ অর্ডার আপডেট করা হয়েছে!');
-    loadOldOrders();
-    loadDeliveryOrders();
-}
-
-function deleteOrder(orderId) {
-    if(confirm('আপনি কি এই অর্ডারটি ডিলিট করতে চান?')){
-        deleteLocalOrder(orderId);
-        alert('🗑️ অর্ডার ডিলিট করা হয়েছে!');
-        loadOldOrders();
-        loadDeliveryOrders();
-    }
-}
-
-// ==================== গ্যালারি ফাংশন ====================
-function loadGallery() {
-    const container = document.getElementById('galleryGrid');
-    if(!container) return;
-    
-    if(galleryImages.length === 0) {
-        container.innerHTML = '<div class="empty-state"><span>🖼️</span><p>কোনো ছবি নেই</p></div>';
-        return;
-    }
-    
-    let categoryMap = new Map();
-    galleryImages.forEach(img => {
-        let cat = img.category || 'অন্যান্য';
-        if(!categoryMap.has(cat)) categoryMap.set(cat, []);
-        categoryMap.get(cat).push(img);
+// ==================== পেজ শো ফাংশন ====================
+function showPage(pageId) {
+    const pages = ['homePage', 'neworderPage', 'oldorderPage', 'deliveryPage', 'galleryPage', 'calculatorPage'];
+    pages.forEach(page => {
+        const el = document.getElementById(page);
+        if(el) el.style.display = 'none';
     });
     
-    let sortedCategories = Array.from(categoryMap.keys()).sort();
+    const targetPage = document.getElementById(pageId);
+    if(targetPage) targetPage.style.display = 'block';
     
-    let html = `<div class="gallery-catalog"><div class="category-tab-bar"><button class="cat-tab active" data-cat="all">সব</button>`;
-    sortedCategories.forEach(cat => {
-        html += `<button class="cat-tab" data-cat="${cat.replace(/'/g, "\\'")}">${escapeHtml(cat)} (${categoryMap.get(cat).length})</button>`;
-    });
-    html += `</div><div class="category-items" id="galleryItemsContainer">`;
+    if(pageId === 'oldorderPage') loadOldOrders();
+    if(pageId === 'deliveryPage') loadDeliveryOrders();
+    if(pageId === 'galleryPage') renderGallery();
+    if(pageId === 'calculatorPage') calculatePrice();
     
-    galleryImages.forEach(img => {
-        const imageUrl = img.imageUrl || img.imageData || '';
-        html += `<div class="catalog-item" data-category="${escapeHtml(img.category || 'অন্যান্য')}">
-            <img src="${imageUrl}" class="catalog-item-img" alt="${escapeHtml(img.title || '')}" loading="lazy" onclick="showFullImage('${escapeHtml(imageUrl)}', '${escapeHtml(img.title || '')}', '${escapeHtml(img.desc || '')}')" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23f0f0f0%22/%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23999%22%3E🖼️%3C/text%3E%3C/svg%3E'">
-            <div class="catalog-item-info">
-                <div class="catalog-item-title">${escapeHtml(img.title || 'নতুন ডিজাইন')}</div>
-                ${img.desc ? `<div class="catalog-item-desc">${escapeHtml(img.desc)}</div>` : ''}
-            </div>
-        </div>`;
-    });
+    closeMenuFixed();
     
-    html += `</div></div>`;
-    container.innerHTML = html;
-    
-    document.querySelectorAll('.cat-tab').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const category = this.getAttribute('data-cat');
-            document.querySelectorAll('.cat-tab').forEach(b => {
-                b.classList.remove('active');
-                b.style.background = '#ffd700';
-                b.style.color = '#8b0000';
-            });
-            this.classList.add('active');
-            this.style.background = currentLocation === 'wb' ? '#8b0000' : '#006a4e';
-            this.style.color = 'white';
-            
-            const items = document.querySelectorAll('#galleryItemsContainer .catalog-item');
-            if(category === 'all') {
-                items.forEach(item => item.style.display = 'block');
-            } else {
-                items.forEach(item => {
-                    item.style.display = item.getAttribute('data-category') === category ? 'block' : 'none';
-                });
-            }
-        });
+    const menuItems = document.querySelectorAll('.menu-item');
+    menuItems.forEach(item => {
+        const pageAttr = item.getAttribute('data-page');
+        if(pageAttr === pageId.replace('Page', '')) {
+            item.classList.add('active');
+        } else {
+            item.classList.remove('active');
+        }
     });
 }
 
-function showFullImage(imageUrl, title, desc) {
-    if(!imageUrl) {
-        alert('ছবির URL নেই');
-        return;
-    }
-    
-    const modalHtml = `
-        <div id="fullImageModal" class="full-image-modal" onclick="closeFullImage()">
-            <div class="full-image-content" onclick="event.stopPropagation()">
-                <button class="full-image-close" onclick="closeFullImage()">✕</button>
-                <img src="${imageUrl}" class="full-image-img" alt="${escapeHtml(title)}" onerror="this.src='data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22%3E%3Crect width=%22100%22 height=%22100%22 fill=%22%23333%22/%3E%3Ctext x=%2250%22 y=%2250%22 text-anchor=%22middle%22 dy=%22.3em%22 fill=%22%23fff%22%3E❌ ছবি লোড হয়নি%3C/text%3E%3C/svg%3E'">
-                <div class="full-image-info">
-                    <div class="full-image-title">${escapeHtml(title)}</div>
-                    ${desc ? `<div class="full-image-desc">${escapeHtml(desc)}</div>` : ''}
-                </div>
-            </div>
-        </div>
-    `;
-    
-    const oldModal = document.getElementById('fullImageModal');
-    if(oldModal) oldModal.remove();
-    
-    document.body.insertAdjacentHTML('beforeend', modalHtml);
-    document.body.style.overflow = 'hidden';
+function toggleMenuFixed() {
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    if(sideMenu) sideMenu.classList.toggle('open');
+    if(menuOverlay) menuOverlay.classList.toggle('show');
 }
 
-function closeFullImage() {
-    const modal = document.getElementById('fullImageModal');
-    if(modal) modal.remove();
-    document.body.style.overflow = '';
+function closeMenuFixed() {
+    const sideMenu = document.getElementById('sideMenu');
+    const menuOverlay = document.getElementById('menuOverlay');
+    if(sideMenu) sideMenu.classList.remove('open');
+    if(menuOverlay) menuOverlay.classList.remove('show');
+}
+
+function closeBannerAd() {
+    const bannerContainer = document.getElementById('bannerAdContainer');
+    if(bannerContainer) bannerContainer.style.display = 'none';
 }
 
 // ==================== DOM লোড ====================
 document.addEventListener('DOMContentLoaded', function() {
     const dateElem = document.getElementById('date');
-    if(dateElem) dateElem.innerText = new Date().toLocaleDateString('bn-BD', { weekday:'long', day:'numeric', month:'long', year:'numeric' });
+    if(dateElem) {
+        const today = new Date();
+        const options = { weekday:'long', day:'numeric', month:'long', year:'numeric' };
+        dateElem.innerText = today.toLocaleDateString('bn-BD', options);
+    }
     
-    setupFirebaseListeners();
     loadPricesFromFirebase();
+    loadGalleryFromFirebase();
+    loadCategoriesFromFirebase();
+    loadAdConfig(); // অ্যাড কনফিগারেশন লোড করুন
     switchLocation('wb');
     
-    if(localStorage.getItem('userEmail')) {
-        userEmail = localStorage.getItem('userEmail');
+    const storedEmail = localStorage.getItem('userEmail');
+    if(storedEmail) {
+        userEmail = storedEmail;
         loadNotificationsForUser();
     }
     
@@ -1958,7 +2457,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         preview.appendChild(img);
                     };
                     reader.readAsDataURL(e.target.files[0]);
-                } else { preview.innerHTML = '<span style="color:#999;">ছবি নির্বাচন করুন</span>'; }
+                } else { 
+                    preview.innerHTML = '<span style="color:#999;">ছবি নির্বাচন করুন</span>'; 
+                }
             }
         });
     }
@@ -1967,34 +2468,50 @@ document.addEventListener('DOMContentLoaded', function() {
     const calcWeight = document.getElementById('calcWeight');
     const calcLabour = document.getElementById('calcLabour');
     const calcGst = document.getElementById('calcGst');
+    
     if(calcPrice) calcPrice.addEventListener('input', calculatePrice);
     if(calcWeight) calcWeight.addEventListener('input', calculatePrice);
     if(calcLabour) calcLabour.addEventListener('input', calculatePrice);
     if(calcGst) calcGst.addEventListener('input', calculatePrice);
     
-    document.querySelectorAll('.menu-item[data-page]').forEach(item => {
+    const menuItems = document.querySelectorAll('.menu-item[data-page]');
+    menuItems.forEach(item => {
         item.addEventListener('click', () => {
             const page = item.getAttribute('data-page');
-            if(page === 'calculator') { showPage('calculator'); }
-            else { showPage(page); }
-            document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
-            item.classList.add('active');
+            if(page === 'calculator') {
+                showPage('calculatorPage');
+            } else {
+                showPage(page + 'Page');
+            }
         });
     });
     
+    // ব্যাক বাটন হ্যান্ডেল
     (function() {
         history.pushState(null, null, location.href);
         window.addEventListener('popstate', function() {
             history.pushState(null, null, location.href);
-            if(document.getElementById('homePage').style.display !== 'block') { showPage('home'); }
+            const homePage = document.getElementById('homePage');
+            if(homePage && homePage.style.display !== 'block') {
+                showPage('homePage');
+            }
         });
     })();
+    
+    // সব বাটনে ক্লিক ট্র্যাক (ইন্টারস্টিশিয়াল অ্যাডের জন্য)
+    const clickableElements = document.querySelectorAll('.big-btn, .loc-btn, .cat-tab, .catalog-item-img, .menu-item, .submit-btn, .edit-order-btn, .delete-order-btn');
+    clickableElements.forEach(el => {
+        el.addEventListener('click', () => {
+            trackClickAndShowAd();
+        });
+    });
 });
 
+// গ্লোবাল ফাংশন এক্সপোজ
+window.switchLocation = switchLocation;
+window.showPage = showPage;
 window.toggleMenuFixed = toggleMenuFixed;
 window.closeMenuFixed = closeMenuFixed;
-window.showPage = showPage;
-window.switchLocation = switchLocation;
 window.saveNewOrder = saveNewOrder;
 window.openEditOrder = openEditOrder;
 window.closeEditOrder = closeEditOrder;
@@ -2015,11 +2532,12 @@ window.markAndShow = markAndShow;
 window.openHelplineModal = openHelplineModal;
 window.closeHelplineModal = closeHelplineModal;
 window.sendHelplineMessage = sendHelplineMessage;
+window.closeBannerAd = closeBannerAd;
 </script>
 </head>
 <body>
 
-<!-- ফিক্সড টপ কার্ড: মেনু বাটন + হেল্পলাইন + নোটিফিকেশন -->
+<!-- ফিক্সড টপ কার্ড -->
 <div class="fixed-top-bar">
     <div class="bar-container">
         <div class="menu-btn-fixed" onclick="toggleMenuFixed()">
@@ -2036,6 +2554,12 @@ window.sendHelplineMessage = sendHelplineMessage;
             <span class="badge-count-fixed" id="notifBadgeFixed">0</span>
         </div>
     </div>
+</div>
+
+<!-- ব্যানার অ্যাড কন্টেইনার -->
+<div id="bannerAdContainer" class="banner-ad-container">
+    <button class="close-banner" onclick="closeBannerAd()">✕</button>
+    <div id="bannerAdContent"></div>
 </div>
 
 <!-- হেল্পলাইন মোডাল -->
@@ -2083,27 +2607,27 @@ window.sendHelplineMessage = sendHelplineMessage;
         <p>সোনা ও রুপোর দাম</p>
     </div>
     <div class="menu-items">
-        <div class="menu-item active" data-page="home" onclick="showPage('home')">
+        <div class="menu-item active" data-page="home">
             <div class="menu-icon">🏠</div>
             <div class="menu-text">হোম / ড্যাশবোর্ড</div>
         </div>
-        <div class="menu-item" data-page="neworder" onclick="showPage('neworder')">
+        <div class="menu-item" data-page="neworder">
             <div class="menu-icon">➕</div>
             <div class="menu-text">নতুন অর্ডার</div>
         </div>
-        <div class="menu-item" data-page="oldorder" onclick="showPage('oldorder')">
+        <div class="menu-item" data-page="oldorder">
             <div class="menu-icon">📋</div>
             <div class="menu-text">আমার অর্ডার</div>
         </div>
-        <div class="menu-item" data-page="delivery" onclick="showPage('delivery')">
+        <div class="menu-item" data-page="delivery">
             <div class="menu-icon">🚚</div>
             <div class="menu-text">অর্ডার ডেলিভারি</div>
         </div>
-        <div class="menu-item" data-page="gallery" onclick="showPage('gallery')">
+        <div class="menu-item" data-page="gallery">
             <div class="menu-icon">🖼️</div>
             <div class="menu-text">ডিজাইন গ্যালারি</div>
         </div>
-        <div class="menu-item" data-page="calculator" onclick="showPage('calculator')">
+        <div class="menu-item" data-page="calculator">
             <div class="menu-icon">🧮</div>
             <div class="menu-text">গোল্ড ক্যালকুলেটর</div>
         </div>
@@ -2117,49 +2641,71 @@ window.sendHelplineMessage = sendHelplineMessage;
             <h1>আজকের সোনা ও রুপোর দাম <span id="currencySymbol">₹</span></h1>
             <div class="live">● Live Gold & Silver price</div>
             <div class="date" id="date"></div>
-            <div class="sync-status"> আজকের দিন ও তারিখ </div>
         </div>
         
         <div class="main-card">
             <div class="location-switch" style="margin-bottom: 20px;">
-                <button class="loc-btn" id="locWb" onclick="switchLocation('wb')">
-                    🇮🇳 পশ্চিমবঙ্গ
-                </button>
-                <button class="loc-btn" id="locBd" onclick="switchLocation('bd')">
-                    🇧🇩 বাংলাদেশ
-                </button>
+                <button class="loc-btn" id="locWb" onclick="switchLocation('wb')">🇮🇳 পশ্চিমবঙ্গ</button>
+                <button class="loc-btn" id="locBd" onclick="switchLocation('bd')">🇧🇩 বাংলাদেশ</button>
             </div>
             
             <div class="section-title">
                 <div class="icon gold-icon">🟡</div>
-                <div><h2>সোনার দাম</h2><div class="sub">প্রতি গ্রাম (<span id="currencySymbol2">₹</span>)</div></div>
+                <div>
+                    <h2>সোনার দাম</h2>
+                    <div class="sub">প্রতি গ্রাম (<span id="currencySymbol2">₹</span>)</div>
+                </div>
             </div>
             <div class="gold-wrapper">
                 <div class="gold-side">
                     <div class="gold-heading gold24">24 ক্যারেট</div>
-                    <div class="mini-box"><div class="label">১ গ্রাম দাম</div><div class="value" id="gold24_1">₹ 0</div></div>
-                    <div class="mini-box"><div class="label">১০ গ্রাম দাম</div><div class="value" id="gold24_10">₹ 0</div></div>
+                    <div class="mini-box">
+                        <div class="label">১ গ্রাম দাম</div>
+                        <div class="value" id="gold24_1">₹ 0</div>
+                    </div>
+                    <div class="mini-box">
+                        <div class="label">১০ গ্রাম দাম</div>
+                        <div class="value" id="gold24_10">₹ 0</div>
+                    </div>
                 </div>
                 <div class="gold-side">
                     <div class="gold-heading gold22">22 ক্যারেট</div>
-                    <div class="mini-box"><div class="label">১ গ্রাম দাম</div><div class="value" id="gold22_1">₹ 0</div></div>
-                    <div class="mini-box"><div class="label">১০ গ্রাম দাম</div><div class="value" id="gold22_10">₹ 0</div></div>
+                    <div class="mini-box">
+                        <div class="label">১ গ্রাম দাম</div>
+                        <div class="value" id="gold22_1">₹ 0</div>
+                    </div>
+                    <div class="mini-box">
+                        <div class="label">১০ গ্রাম দাম</div>
+                        <div class="value" id="gold22_10">₹ 0</div>
+                    </div>
                 </div>
             </div>
             
             <div class="section-title">
                 <div class="icon silver-icon">⚪</div>
-                <div><h2>রুপোর দাম</h2><div class="sub">প্রতি গ্রাম (<span id="currencySymbol3">₹</span>)</div></div>
+                <div>
+                    <h2>রুপোর দাম</h2>
+                    <div class="sub">প্রতি গ্রাম (<span id="currencySymbol3">₹</span>)</div>
+                </div>
             </div>
             <div class="silver-grid">
-                <div class="mini-box"><div class="label">১ গ্রাম দাম</div><div class="value" id="silver_1">₹ 0</div></div>
-                <div class="mini-box"><div class="label">১০ গ্রাম দাম</div><div class="value" id="silver_10">₹ 0</div></div>
+                <div class="mini-box">
+                    <div class="label">১ গ্রাম দাম</div>
+                    <div class="value" id="silver_1">₹ 0</div>
+                </div>
+                <div class="mini-box">
+                    <div class="label">১০ গ্রাম দাম</div>
+                    <div class="value" id="silver_10">₹ 0</div>
+                </div>
             </div>
         </div>
         
-        <div class="big-btn" onclick="showPage('calculator')">
+        <div class="big-btn" onclick="showPage('calculatorPage')">
             <div class="big-btn-icon">🧮</div>
-            <div><div class="big-btn-title">Gold Calculator</div><div class="big-btn-sub">সোনা রুপোর দাম হিসাব করুন <br/> এবং Bill Send করুন WhatsApp এ </div></div>
+            <div>
+                <div class="big-btn-title">Gold Calculator</div>
+                <div class="big-btn-sub">সোনা রুপোর দাম হিসাব করুন এবং Bill Send করুন WhatsApp এ</div>
+            </div>
         </div>
     </div>
 
@@ -2172,7 +2718,10 @@ window.sendHelplineMessage = sendHelplineMessage;
             </div>
             <div class="section-title">
                 <div class="icon gold-icon">➕</div>
-                <div><h2>নতুন অর্ডার</h2><div class="sub">আপনার অর্ডার আপনার ডিভাইসে সংরক্ষিত হবে</div></div>
+                <div>
+                    <h2>নতুন অর্ডার</h2>
+                    <div class="sub">আপনার অর্ডার আপনার ডিভাইসে সংরক্ষিত হবে</div>
+                </div>
             </div>
             <div class="form-group">
                 <label>আপনার নাম <span class="required-star">*</span></label>
@@ -2234,7 +2783,10 @@ window.sendHelplineMessage = sendHelplineMessage;
             </div>
             <div class="section-title">
                 <div class="icon silver-icon">📋</div>
-                <div><h2>আমার অর্ডার</h2><div class="sub">আপনার সকল অর্ডারের তালিকা (আপনার ডিভাইসে সংরক্ষিত)</div></div>
+                <div>
+                    <h2>আমার অর্ডার</h2>
+                    <div class="sub">আপনার সকল অর্ডারের তালিকা (আপনার ডিভাইসে সংরক্ষিত)</div>
+                </div>
             </div>
             <div id="oldOrdersList"></div>
         </div>
@@ -2249,7 +2801,10 @@ window.sendHelplineMessage = sendHelplineMessage;
             </div>
             <div class="section-title">
                 <div class="icon gold-icon">🚚</div>
-                <div><h2>অর্ডার ডেলিভারি</h2><div class="sub">ডেলিভারি pending অর্ডার</div></div>
+                <div>
+                    <h2>অর্ডার ডেলিভারি</h2>
+                    <div class="sub">ডেলিভারি pending অর্ডার</div>
+                </div>
             </div>
             <div id="deliveryOrdersList"></div>
         </div>
@@ -2264,7 +2819,10 @@ window.sendHelplineMessage = sendHelplineMessage;
             </div>
             <div class="section-title">
                 <div class="icon gold-icon">🖼️</div>
-                <div><h2>ডিজাইন গ্যালারি</h2><div class="sub">আমাদের কালেকশন - ছবিতে ক্লিক করে বড় করে দেখুন</div></div>
+                <div>
+                    <h2>ডিজাইন গ্যালারি</h2>
+                    <div class="sub">আমাদের কালেকশন - ছবিতে ক্লিক করে বড় করে দেখুন</div>
+                </div>
             </div>
             <div id="galleryGrid"></div>
         </div>
@@ -2283,7 +2841,7 @@ window.sendHelplineMessage = sendHelplineMessage;
             
             <div class="calc-card">
                 <label>💰 প্রতি গ্রাম দাম (<span id="calcCurrencySymbol">₹</span>)</label>
-                <input type="number" id="calcPrice" placeholder="যেমন: 7850" value="7850">
+                <input type="number" id="calcPrice" placeholder="যেমন: 7850">
             </div>
             <div class="calc-card">
                 <label>⚖️ ওজন (গ্রাম)</label>
@@ -2300,7 +2858,7 @@ window.sendHelplineMessage = sendHelplineMessage;
                     <button type="button" class="gst-toggle-small" id="gstToggleBtn" onclick="toggleGST()">➕ যোগ করুন</button>
                 </div>
                 <div id="gstInputDiv" class="gst-input-area">
-                    <input type="number" id="calcGst" placeholder="GST পার্সেন্ট" value="0">
+                    <input type="number" id="calcGst" placeholder="GST পার্সেন্ট">
                 </div>
             </div>
             
@@ -2362,23 +2920,51 @@ window.sendHelplineMessage = sendHelplineMessage;
         <div class="close-btn" onclick="closeEditOrder()">✕</div>
         <div class="calc-title">✏️ অর্ডার এডিট করুন</div>
         <input type="hidden" id="editOrderId">
-        <div class="calc-box"><label>গ্রাহকের নাম</label><input type="text" id="editCustomerName"></div>
-        <div class="calc-box"><label>মোবাইল নম্বর</label><input type="tel" id="editCustomerPhone"></div>
-        <div class="calc-box"><label>গহনার ধরন</label><input type="text" id="editJewelryType"></div>
-        <div class="calc-box"><label>ওজন (গ্রাম)</label><input type="number" id="editWeight" step="0.01"></div>
-        <div class="calc-box"><label>জমা সোনা (গ্রাম)</label><input type="number" id="editGoldDeposit" step="0.1"></div>
-        <div class="calc-box"><label>জমা টাকা</label><input type="number" id="editCashDeposit"></div>
-        <div class="calc-box"><label>ঠিকানা</label><textarea id="editAddress" rows="2"></textarea></div>
-        <div class="calc-box"><label>স্ট্যাটাস</label>
-            <select id="editStatus"><option value="pending">পেন্ডিং</option><option value="delivered">ডেলিভারি সম্পন্ন</option></select>
+        <div class="calc-box">
+            <label>গ্রাহকের নাম</label>
+            <input type="text" id="editCustomerName">
+        </div>
+        <div class="calc-box">
+            <label>মোবাইল নম্বর</label>
+            <input type="tel" id="editCustomerPhone">
+        </div>
+        <div class="calc-box">
+            <label>গহনার ধরন</label>
+            <input type="text" id="editJewelryType">
+        </div>
+        <div class="calc-box">
+            <label>ওজন (গ্রাম)</label>
+            <input type="number" id="editWeight" step="0.01">
+        </div>
+        <div class="calc-box">
+            <label>জমা সোনা (গ্রাম)</label>
+            <input type="number" id="editGoldDeposit" step="0.1">
+        </div>
+        <div class="calc-box">
+            <label>জমা টাকা</label>
+            <input type="number" id="editCashDeposit">
+        </div>
+        <div class="calc-box">
+            <label>ঠিকানা</label>
+            <textarea id="editAddress" rows="2"></textarea>
+        </div>
+        <div class="calc-box">
+            <label>স্ট্যাটাস</label>
+            <select id="editStatus">
+                <option value="pending">পেন্ডিং</option>
+                <option value="delivered">ডেলিভারি সম্পন্ন</option>
+            </select>
         </div>
         <div id="editImagePreview" style="margin-bottom:10px;"></div>
         <button class="submit-btn" onclick="updateOrder()">💾 আপডেট করুন</button>
     </div>
 </div>
+
 <script>
 if ('serviceWorker' in navigator) {
-  navigator.serviceWorker.register('service-worker.js');
+    navigator.serviceWorker.register('/sw.js')
+        .then(reg => console.log('SW registered:', reg))
+        .catch(err => console.log('SW error:', err));
 }
 </script>
 </body>
