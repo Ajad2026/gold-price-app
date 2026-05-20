@@ -1,21 +1,128 @@
 {
-  "name": "Gold Price",
-  "short_name": "GoldPrice",
+  "name": "সোনা ও রুপোর দাম - ভারত ও বাংলাদেশ",
+  "short_name": "Gold Price",
+  "description": "ভারত ও বাংলাদেশের সোনা ও রুপোর দাম জানুন, অর্ডার করুন, ক্যালকুলেটর ব্যবহার করুন",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#d4af37",
+  "theme_color": "#d4a017",
+  "background_color": "#7a0000",
   "orientation": "portrait",
+  "scope": "/",
+  "lang": "bn",
+  "dir": "ltr",
   "icons": [
     {
-      "src": "icon-192.png",
-      "sizes": "192x192",
-      "type": "image/png"
+      "src": "/icons/icon-72x72.png",
+      "sizes": "72x72",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "icon-512.png",
+      "src": "/icons/icon-96x96.png",
+      "sizes": "96x96",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-128x128.png",
+      "sizes": "128x128",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-144x144.png",
+      "sizes": "144x144",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-152x152.png",
+      "sizes": "152x152",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-384x384.png",
+      "sizes": "384x384",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "/icons/icon-512x512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any maskable"
     }
-  ]
+  ],
+  "shortcuts": [
+    {
+      "name": "সোনার দাম",
+      "short_name": "দাম",
+      "description": "আজকের সোনার দাম দেখুন",
+      "url": "/",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "নতুন অর্ডার",
+      "short_name": "অর্ডার",
+      "description": "নতুন অর্ডার করুন",
+      "url": "/?page=neworder",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    },
+    {
+      "name": "গোল্ড ক্যালকুলেটর",
+      "short_name": "ক্যালকুলেটর",
+      "description": "সোনার দাম হিসাব করুন",
+      "url": "/?page=calculator",
+      "icons": [
+        {
+          "src": "/icons/icon-96x96.png",
+          "sizes": "96x96"
+        }
+      ]
+    }
+  ],
+  "categories": ["shopping", "finance", "lifestyle"],
+  "screenshots": [
+    {
+      "src": "/screenshots/home.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "হোম পেজ"
+    },
+    {
+      "src": "/screenshots/calculator.png",
+      "sizes": "1080x1920",
+      "type": "image/png",
+      "form_factor": "wide",
+      "label": "ক্যালকুলেটর পেজ"
+    }
+  ],
+  "prefer_related_applications": false,
+  "related_applications": [],
+  "display_override": ["window-controls-overlay", "standalone"],
+  "launch_handler": {
+    "client_mode": ["focus-existing", "auto"]
+  },
+  "handle_links": "preferred",
+  "edge_side_panel": {
+    "preferred_width": 400
+  }
 }
