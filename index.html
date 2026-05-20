@@ -1327,10 +1327,8 @@ let adConfig = {
     rewarded: { enabled: false, unitId: '', reward: '50' }
 };
 let clickCounter = 0;
-let interstitialAdLoaded = false;
-let rewardedAdLoaded = false;
 
-// ==================== অ্যাড কনফিগারেশন লিসেনার (Firebase থেকে রিয়েলটাইমে) ====================
+// ==================== অ্যাড কনফিগারেশন লিসেনার ====================
 function loadAdConfig() {
     database.ref('adConfig').on('value', (snapshot) => {
         const config = snapshot.val();
@@ -1352,7 +1350,6 @@ function loadAdConfig() {
                 }
             };
             
-            // ব্যানার অ্যাড দেখানো/লুকানো
             const bannerContainer = document.getElementById('bannerAdContainer');
             if(bannerContainer) {
                 if(adConfig.banner.enabled && adConfig.banner.unitId) {
@@ -1363,17 +1360,14 @@ function loadAdConfig() {
                 }
             }
             
-            console.log('অ্যাড কনফিগারেশন আপডেট করা হয়েছে:', adConfig);
+            console.log('অ্যাড কনফিগারেশন আপডেট:', adConfig);
         }
     });
 }
 
-// ব্যানার অ্যাড লোড করার ফাংশন
 function loadBannerAd(unitId) {
     const bannerDiv = document.getElementById('bannerAdContent');
     if(!bannerDiv) return;
-    
-    // এখানে আপনার অ্যাড নেটওয়ার্ক অনুযায়ী ব্যানার লোড করুন
     bannerDiv.innerHTML = `
         <div style="background: #1a1a2e; padding: 10px; text-align: center; border-radius: 8px; width: 100%;">
             <span style="color: #ffd700; font-size: 12px;">📢 বিজ্ঞাপন</span>
@@ -1382,32 +1376,22 @@ function loadBannerAd(unitId) {
     `;
 }
 
-// ইন্টারস্টিশিয়াল অ্যাড দেখানোর ফাংশন
 function showInterstitialAd() {
     if(!adConfig.interstitial.enabled) return;
     if(!adConfig.interstitial.unitId) return;
-    
-    console.log('ইন্টারস্টিশিয়াল অ্যাড দেখানো হচ্ছে:', adConfig.interstitial.unitId);
-    // এখানে আপনার অ্যাড নেটওয়ার্ক অনুযায়ী ইন্টারস্টিশিয়াল লোড ও দেখান
-    alert('📢 ইন্টারস্টিশিয়াল অ্যাড দেখানো হচ্ছে (ডেমো)');
+    console.log('ইন্টারস্টিশিয়াল অ্যাড:', adConfig.interstitial.unitId);
+    alert('📢 ইন্টারস্টিশিয়াল অ্যাড (ডেমো)');
 }
 
-// রিওয়ার্ডেড অ্যাড দেখানোর ফাংশন
 function showRewardedAd() {
     if(!adConfig.rewarded.enabled) return;
     if(!adConfig.rewarded.unitId) return;
-    
-    console.log('রিওয়ার্ডেড অ্যাড দেখানো হচ্ছে:', adConfig.rewarded.unitId);
-    alert(`🎁 রিওয়ার্ডেড অ্যাড দেখানো হচ্ছে!\nপুরস্কার: ${adConfig.rewarded.reward} পয়েন্ট`);
+    alert(`🎁 রিওয়ার্ডেড অ্যাড!\nপুরস্কার: ${adConfig.rewarded.reward} পয়েন্ট`);
 }
 
-// ক্লিক কাউন্ট ট্র্যাক করে ইন্টারস্টিশিয়াল দেখানো
 function trackClickAndShowAd() {
     if(!adConfig.interstitial.enabled) return;
-    
     clickCounter++;
-    console.log('ক্লিক কাউন্ট:', clickCounter, '/', adConfig.interstitial.clickCountThreshold);
-    
     if(clickCounter >= adConfig.interstitial.clickCountThreshold) {
         showInterstitialAd();
         clickCounter = 0;
@@ -1418,17 +1402,15 @@ function trackClickAndShowAd() {
 let currentLocation = 'wb';
 let gstEnabled = false;
 
-// দামের ডাটা
 let prices = {
-    wb: { gold24: 7850, gold22: 7320, silver: 98, currency: '₹', currencyName: 'রুপি', symbol: '₹' },
-    bd: { gold24: 118000, gold22: 110000, silver: 2800, currency: '৳', currencyName: 'টাকা', symbol: '৳' }
+    wb: { gold24: 7850, gold22: 7320, silver: 98, currency: '₹', symbol: '₹' },
+    bd: { gold24: 118000, gold22: 110000, silver: 2800, currency: '৳', symbol: '৳' }
 };
 
 let galleryImages = [];
 let galleryCategories = ["সব", "নেকলেস", "চেন", "আংটি", "দুল", "ব্রেসলেট"];
 const LOCAL_ORDERS_KEY = 'local_orders';
 
-// নোটিফিকেশন ভেরিয়েবল
 let userEmail = localStorage.getItem('userEmail') || '';
 let myNotifications = [];
 let notifListener = null;
@@ -1493,13 +1475,9 @@ function switchLocation(location) {
     
     const locWb = document.getElementById('locWb');
     const locBd = document.getElementById('locBd');
-    const locWb2 = document.getElementById('locWb2');
-    const locBd2 = document.getElementById('locBd2');
     
     if(locWb) locWb.classList.toggle('active', location === 'wb');
     if(locBd) locBd.classList.toggle('active', location === 'bd');
-    if(locWb2) locWb2.classList.toggle('active', location === 'wb');
-    if(locBd2) locBd2.classList.toggle('active', location === 'bd');
     
     if(location === 'wb') {
         document.body.classList.remove('bd-theme');
@@ -1692,9 +1670,7 @@ function loadNotificationsForUser() {
             const n = child.val();
             if(n.targetUsers && (n.targetUsers.includes(userEmail) || n.targetUsers.includes('all'))) {
                 notifs.push({ id: child.key, ...n, isRead: n.isRead || false });
-            } else if(!n.targetUsers && n.isBroadcast) {
-                notifs.push({ id: child.key, ...n, isRead: n.isRead || false });
-            } else if(n.targetUsers === 'all' || n.forAll) {
+            } else if(n.isBroadcast) {
                 notifs.push({ id: child.key, ...n, isRead: n.isRead || false });
             }
         });
@@ -1827,7 +1803,7 @@ function sendHelplineMessage() {
         return;
     }
     if(!emailPattern.test(email)) {
-        if(errorDiv) errorDiv.innerHTML = '❌ সঠিক ইমেইল ফরম্যাট দিন! (যেমন: name@gmail.com)';
+        if(errorDiv) errorDiv.innerHTML = '❌ সঠিক ইমেইল ফরম্যাট দিন!';
         return;
     }
     if(!message) {
@@ -1836,7 +1812,7 @@ function sendHelplineMessage() {
     }
     
     if(!navigator.onLine) {
-        if(errorDiv) errorDiv.innerHTML = '❌ নেটওয়ার্ক সমস্যা! আপনার ইন্টারনেট সংযোগ চেক করুন।';
+        if(errorDiv) errorDiv.innerHTML = '❌ নেটওয়ার্ক সমস্যা!';
         return;
     }
     
@@ -1871,7 +1847,7 @@ function sendHelplineMessage() {
     database.ref('helpMessages').push(helpData)
         .then(() => {
             if(errorDiv) {
-                errorDiv.innerHTML = '✅ আপনার মেসেজ সফলভাবে পাঠানো হয়েছে! আমাদের টিম শীঘ্রই যোগাযোগ করবে।';
+                errorDiv.innerHTML = '✅ আপনার মেসেজ সফলভাবে পাঠানো হয়েছে!';
                 errorDiv.style.color = '#4caf50';
             }
             if(nameInput) nameInput.value = '';
@@ -1886,7 +1862,7 @@ function sendHelplineMessage() {
         .catch((error) => {
             console.error('Firebase Error:', error);
             if(errorDiv) {
-                errorDiv.innerHTML = '❌ মেসেজ পাঠানো ব্যর্থ হয়েছে! দয়া করে পরে আবার চেষ্টা করুন।';
+                errorDiv.innerHTML = '❌ মেসেজ পাঠানো ব্যর্থ হয়েছে!';
                 errorDiv.style.color = '#ff4444';
             }
         })
@@ -2062,7 +2038,6 @@ function saveOrderWithImage(customImageData) {
     clearOrderForm();
     showPage('oldorderPage');
     
-    // অর্ডার সেভ করার পর ক্লিক কাউন্ট ট্র্যাক (ইন্টারস্টিশিয়াল অ্যাডের জন্য)
     trackClickAndShowAd();
 }
 
@@ -2423,7 +2398,7 @@ document.addEventListener('DOMContentLoaded', function() {
     loadPricesFromFirebase();
     loadGalleryFromFirebase();
     loadCategoriesFromFirebase();
-    loadAdConfig(); // অ্যাড কনফিগারেশন লোড করুন
+    loadAdConfig();
     switchLocation('wb');
     
     const storedEmail = localStorage.getItem('userEmail');
@@ -2486,7 +2461,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
     
-    // ব্যাক বাটন হ্যান্ডেল
     (function() {
         history.pushState(null, null, location.href);
         window.addEventListener('popstate', function() {
@@ -2498,7 +2472,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     })();
     
-    // সব বাটনে ক্লিক ট্র্যাক (ইন্টারস্টিশিয়াল অ্যাডের জন্য)
     const clickableElements = document.querySelectorAll('.big-btn, .loc-btn, .cat-tab, .catalog-item-img, .menu-item, .submit-btn, .edit-order-btn, .delete-order-btn');
     clickableElements.forEach(el => {
         el.addEventListener('click', () => {
@@ -2644,6 +2617,7 @@ window.closeBannerAd = closeBannerAd;
         </div>
         
         <div class="main-card">
+            <!-- শুধুমাত্র হোম পেজে লোকেশন সুইচার -->
             <div class="location-switch" style="margin-bottom: 20px;">
                 <button class="loc-btn" id="locWb" onclick="switchLocation('wb')">🇮🇳 পশ্চিমবঙ্গ</button>
                 <button class="loc-btn" id="locBd" onclick="switchLocation('bd')">🇧🇩 বাংলাদেশ</button>
@@ -2709,13 +2683,9 @@ window.closeBannerAd = closeBannerAd;
         </div>
     </div>
 
-    <!-- নতুন অর্ডার পেজ -->
+    <!-- নতুন অর্ডার পেজ (লোকেশন সুইচার নেই) -->
     <div id="neworderPage" style="display:none;">
         <div class="main-card">
-            <div class="location-switch" style="margin-bottom: 20px;">
-                <button class="loc-btn" id="locWb2" onclick="switchLocation('wb')">🇮🇳 পশ্চিমবঙ্গ</button>
-                <button class="loc-btn" id="locBd2" onclick="switchLocation('bd')">🇧🇩 বাংলাদেশ</button>
-            </div>
             <div class="section-title">
                 <div class="icon gold-icon">➕</div>
                 <div>
@@ -2774,13 +2744,9 @@ window.closeBannerAd = closeBannerAd;
         </div>
     </div>
 
-    <!-- আমার অর্ডার পেজ -->
+    <!-- আমার অর্ডার পেজ (লোকেশন সুইচার নেই) -->
     <div id="oldorderPage" style="display:none;">
         <div class="main-card">
-            <div class="location-switch" style="margin-bottom: 20px;">
-                <button class="loc-btn" onclick="switchLocation('wb')">🇮🇳 পশ্চিমবঙ্গ</button>
-                <button class="loc-btn" onclick="switchLocation('bd')">🇧🇩 বাংলাদেশ</button>
-            </div>
             <div class="section-title">
                 <div class="icon silver-icon">📋</div>
                 <div>
@@ -2792,13 +2758,9 @@ window.closeBannerAd = closeBannerAd;
         </div>
     </div>
 
-    <!-- অর্ডার ডেলিভারি পেজ -->
+    <!-- অর্ডার ডেলিভারি পেজ (লোকেশন সুইচার নেই) -->
     <div id="deliveryPage" style="display:none;">
         <div class="main-card">
-            <div class="location-switch" style="margin-bottom: 20px;">
-                <button class="loc-btn" onclick="switchLocation('wb')">🇮🇳 পশ্চিমবঙ্গ</button>
-                <button class="loc-btn" onclick="switchLocation('bd')">🇧🇩 বাংলাদেশ</button>
-            </div>
             <div class="section-title">
                 <div class="icon gold-icon">🚚</div>
                 <div>
@@ -2810,13 +2772,9 @@ window.closeBannerAd = closeBannerAd;
         </div>
     </div>
 
-    <!-- ডিজাইন গ্যালারি পেজ -->
+    <!-- ডিজাইন গ্যালারি পেজ (লোকেশন সুইচার নেই) -->
     <div id="galleryPage" style="display:none;">
         <div class="main-card">
-            <div class="location-switch" style="margin-bottom: 20px;">
-                <button class="loc-btn" onclick="switchLocation('wb')">🇮🇳 পশ্চিমবঙ্গ</button>
-                <button class="loc-btn" onclick="switchLocation('bd')">🇧🇩 বাংলাদেশ</button>
-            </div>
             <div class="section-title">
                 <div class="icon gold-icon">🖼️</div>
                 <div>
@@ -2828,7 +2786,7 @@ window.closeBannerAd = closeBannerAd;
         </div>
     </div>
 
-    <!-- ক্যালকুলেটর পেজ -->
+    <!-- ক্যালকুলেটর পেজ (লোকেশন সুইচার নেই) -->
     <div id="calculatorPage" style="display:none;">
         <div class="calculator-page">
             <div class="calculator-header">
