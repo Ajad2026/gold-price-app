@@ -98,7 +98,11 @@
       ]
     }
   ],
-  "categories": ["shopping", "finance", "lifestyle"],
+  "categories": [
+    "shopping",
+    "finance",
+    "lifestyle"
+  ],
   "screenshots": [
     {
       "src": "/screenshots/home.png",
@@ -116,10 +120,15 @@
     }
   ],
   "prefer_related_applications": false,
-  "related_applications": [],
-  "display_override": ["window-controls-overlay", "standalone"],
+  "display_override": [
+    "window-controls-overlay",
+    "standalone"
+  ],
   "launch_handler": {
-    "client_mode": ["focus-existing", "auto"]
+    "client_mode": [
+      "focus-existing",
+      "auto"
+    ]
   },
   "handle_links": "preferred",
   "edge_side_panel": {
